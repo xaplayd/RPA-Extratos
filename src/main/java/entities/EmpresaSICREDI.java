@@ -1,4 +1,4 @@
-package entities;
+package main.java.entities;
 
 import java.awt.Robot;
 import java.awt.event.InputEvent;
@@ -12,8 +12,8 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
 
-import utils.ArchiveAdm;
-import utils.ChromeAdm;
+import main.java.utils.ArchiveAdm;
+import main.java.utils.ChromeAdm;
 
 public class EmpresaSICREDI {
 
@@ -24,6 +24,7 @@ public class EmpresaSICREDI {
 	private String trans;
 	private String cnpj;
 	ChromeAdm chromeAdm = new ChromeAdm();
+	ArchiveAdm archiveAdm = new ArchiveAdm();
 	private String caminhoPastaSalvar;
 	private LocalDate data;
 	private String nomeArquivo;
@@ -154,7 +155,7 @@ public class EmpresaSICREDI {
 			
 			s = new Screen();
 			
-			Pattern clicaExtratoBtn = new Pattern(getClass().getResource("/prints/sicredi/clicaextrato.png")).similar(0.6);
+			Pattern clicaExtratoBtn = archiveAdm.getPatternFromJar("/prints/sicredi/clicaextrato.png",0.6);
 			Match mClicaExtrato = s.wait(clicaExtratoBtn, 10);
 			Location locClicaExtrato = mClicaExtrato.getTarget();
 			robot.mouseMove(locClicaExtrato.getX(), locClicaExtrato.getY());
@@ -186,7 +187,7 @@ public class EmpresaSICREDI {
 			
 			s = new Screen();
 			
-			Pattern dataHojeBtn = new Pattern(getClass().getResource("/prints/sicredi/datahoje.png")).similar(0.6);
+			Pattern dataHojeBtn = archiveAdm.getPatternFromJar("/prints/sicredi/datahoje.png",0.6);
 			Match mDataHoje = s.wait(dataHojeBtn, 10);
 			Location locDataHoje = mDataHoje.getTarget();
 			robot.mouseMove(locDataHoje.getX(), locDataHoje.getY());
@@ -203,7 +204,7 @@ public class EmpresaSICREDI {
 			
 			s.type(dataParaInieFim);
 			
-			Pattern pesquisarBtn = new Pattern(getClass().getResource("/prints/sicredi/pesquisar.png")).similar(0.6);
+			Pattern pesquisarBtn = archiveAdm.getPatternFromJar("/prints/sicredi/pesquisar.png",0.6);
 			Match mPesquisar = s.wait(pesquisarBtn, 10);
 			Location locPesquisar = mPesquisar.getTarget();
 			robot.mouseMove(locPesquisar.getX(), locPesquisar.getY());
@@ -217,7 +218,7 @@ public class EmpresaSICREDI {
 			s.keyUp(Key.CTRL);
 			s.type("gerar pdf");
 			
-			Pattern gerarPdfBtn = new Pattern(getClass().getResource("/prints/sicredi/gerarpdf.png")).similar(0.6);
+			Pattern gerarPdfBtn = archiveAdm.getPatternFromJar("/prints/sicredi/gerarpdf.png",0.6);
 			Match mGerarPdf = s.wait(gerarPdfBtn, 10);
 			Location locGerarPdf = mGerarPdf.getTarget();
 			robot.mouseMove(locGerarPdf.getX(), locGerarPdf.getY());
@@ -226,10 +227,8 @@ public class EmpresaSICREDI {
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			Thread.sleep(5000);
 			
-
-			ArchiveAdm arquivo = new ArchiveAdm();
 			
-			arquivo.salvarArquivoSICREDI(nomeArquivo, caminhoPastaSalvar, data);
+			archiveAdm.salvarArquivoSICREDI(nomeArquivo, caminhoPastaSalvar, data);
 			
 			
 		} catch (Exception e) {

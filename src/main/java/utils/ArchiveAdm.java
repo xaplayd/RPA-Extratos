@@ -1,8 +1,11 @@
-package utils;
+package main.java.utils;
 
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -36,7 +39,7 @@ public class ArchiveAdm {
 
 			Robot robot = new Robot();
 			Screen s = new Screen();
-			Pattern impressoraBtn = new Pattern(getClass().getResource("/prints/tipoimpressora.png")).similar(0.4);
+			Pattern impressoraBtn = getPatternFromJar("/prints/tipoimpressora.png",0.4);
 			Match mImpressora = s.wait(impressoraBtn, 10);
 			Location locImpressora = mImpressora.getTarget();
 			robot.mouseMove(locImpressora.getX(), locImpressora.getY());
@@ -46,8 +49,7 @@ public class ArchiveAdm {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern impressoraUnselectBtn = new Pattern(getClass().getResource("/prints/comopdfunselected.png"))
-					.similar(0.4);
+			Pattern impressoraUnselectBtn = getPatternFromJar("/prints/comopdfunselected.png",0.4);
 			Match mImpressoraUnselected = s.wait(impressoraUnselectBtn, 10);
 			Location locImpressoraUnselected = mImpressoraUnselected.getTarget();
 
@@ -58,8 +60,7 @@ public class ArchiveAdm {
 				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 				Thread.sleep(3000);
 			} else {
-				Pattern impressoraSelectBtn = new Pattern(getClass().getResource("/prints/comopdfselected.png"))
-						.similar(0.4);
+				Pattern impressoraSelectBtn = getPatternFromJar("/prints/comopdfselected.png",0.4);
 				Match mImpressoraSelected = s.wait(impressoraSelectBtn, 10);
 				Location locImpressoraSelected = mImpressoraSelected.getTarget();
 				robot.mouseMove(locImpressoraSelected.getX(), locImpressoraSelected.getY());
@@ -73,7 +74,7 @@ public class ArchiveAdm {
 			/* Nova captura */
 			s = new Screen();
 
-			Pattern imprimirChromeBtn = new Pattern(getClass().getResource("/prints/salvarchrome.png")).similar(0.3);
+			Pattern imprimirChromeBtn = getPatternFromJar("/prints/salvarchrome.png",0.3);
 
 			Match mImprimirChrome = s.wait(imprimirChromeBtn, 10);
 			Location locImprimirChrome = mImprimirChrome.getTarget();
@@ -92,7 +93,7 @@ public class ArchiveAdm {
 			/* Nova captura */
 			s = new Screen();
 
-			Pattern caminhoSalvar = new Pattern(getClass().getResource("/prints/caminhoSalvar.png")).similar(0.3);
+			Pattern caminhoSalvar = getPatternFromJar("/prints/caminhoSalvar.png",0.3);
 
 			Match mCaminhoSalvar = s.wait(caminhoSalvar, 10);
 			Location locCaminhoSalvar = mCaminhoSalvar.getTarget();
@@ -134,7 +135,7 @@ public class ArchiveAdm {
 			/* Nova captura */
 			s = new Screen();
 
-			Pattern nomeArquivo = new Pattern(getClass().getResource("/prints/nomeArquivo.png")).similar(0.3);
+			Pattern nomeArquivo = getPatternFromJar("/prints/nomeArquivo.png",0.3);
 
 			Match mNomeArquivo = s.wait(nomeArquivo, 10);
 			Location locNomeArquivo = mNomeArquivo.getTarget();
@@ -154,7 +155,7 @@ public class ArchiveAdm {
 			/* Nova captura */
 			s = new Screen();
 
-			Pattern salvarBtn = new Pattern(getClass().getResource("/prints/salvar.png")).similar(0.3);
+			Pattern salvarBtn = getPatternFromJar("/prints/salvar.png",0.3);
 
 			Match mSalvar = s.wait(salvarBtn, 10);
 			Location locSalvar = mSalvar.getTarget();
@@ -192,7 +193,7 @@ public class ArchiveAdm {
 
 			Robot robot = new Robot();
 			Screen s = new Screen();
-			Pattern caminhoSalvar = new Pattern(getClass().getResource("/prints/caminhoSalvar.png")).similar(0.3);
+			Pattern caminhoSalvar = getPatternFromJar("/prints/caminhoSalvar.png",0.3);
 			Match mCaminhoSalvar = s.wait(caminhoSalvar, 10);
 			Location locCaminhoSalvar = mCaminhoSalvar.getTarget();
 
@@ -233,7 +234,7 @@ public class ArchiveAdm {
 			/* Nova captura */
 			s = new Screen();
 
-			Pattern nomeArquivo = new Pattern(getClass().getResource("/prints/abc/nomeArquivo.png")).similar(0.3);
+			Pattern nomeArquivo = getPatternFromJar("/prints/abc/nomeArquivo.png",0.3);
 
 			Match mNomeArquivo = s.wait(nomeArquivo, 10);
 			Location locNomeArquivo = mNomeArquivo.getTarget();
@@ -257,7 +258,7 @@ public class ArchiveAdm {
 			/* Nova captura */
 			s = new Screen();
 
-			Pattern salvarBtn = new Pattern(getClass().getResource("/prints/salvar.png")).similar(0.3);
+			Pattern salvarBtn = getPatternFromJar("/prints/salvar.png",0.3);
 
 			Match mSalvar = s.wait(salvarBtn, 10);
 			Location locSalvar = mSalvar.getTarget();
@@ -295,7 +296,7 @@ public class ArchiveAdm {
 
 			Robot robot = new Robot();
 			Screen s = new Screen();
-			Pattern caminhoSalvar = new Pattern(getClass().getResource("/prints/caminhoSalvar.png")).similar(0.3);
+			Pattern caminhoSalvar = getPatternFromJar("/prints/caminhoSalvar.png",0.3);
 			Match mCaminhoSalvar = s.wait(caminhoSalvar, 10);
 			Location locCaminhoSalvar = mCaminhoSalvar.getTarget();
 
@@ -336,7 +337,7 @@ public class ArchiveAdm {
 			/* Nova captura */
 			s = new Screen();
 
-			Pattern nomeArquivo = new Pattern(getClass().getResource("/prints/abc/nomeArquivo.png")).similar(0.3);
+			Pattern nomeArquivo = getPatternFromJar("/prints/abc/nomeArquivo.png",0.3);
 
 			Match mNomeArquivo = s.wait(nomeArquivo, 10);
 			Location locNomeArquivo = mNomeArquivo.getTarget();
@@ -360,7 +361,7 @@ public class ArchiveAdm {
 			/* Nova captura */
 			s = new Screen();
 
-			Pattern salvarBtn = new Pattern(getClass().getResource("/prints/salvar.png")).similar(0.3);
+			Pattern salvarBtn = getPatternFromJar("/prints/salvar.png",0.3);
 
 			Match mSalvar = s.wait(salvarBtn, 10);
 			Location locSalvar = mSalvar.getTarget();
@@ -397,7 +398,7 @@ public class ArchiveAdm {
 			Robot robot = new Robot();
 			Screen s = new Screen();
 
-			Pattern caminhoSalvar = new Pattern(getClass().getResource("/prints/caminhoSalvar.png")).similar(0.3);
+			Pattern caminhoSalvar = getPatternFromJar("/prints/caminhoSalvar.png",0.3);
 			Match mCaminhoSalvar = s.wait(caminhoSalvar, 10);
 			Location locCaminhoSalvar = mCaminhoSalvar.getTarget();
 
@@ -438,7 +439,7 @@ public class ArchiveAdm {
 			/* Nova captura */
 			s = new Screen();
 
-			Pattern nomeArquivo = new Pattern(getClass().getResource("/prints/abc/nomeArquivo.png")).similar(0.3);
+			Pattern nomeArquivo = getPatternFromJar("/prints/abc/nomeArquivo.png",0.3);
 
 			Match mNomeArquivo = s.wait(nomeArquivo, 10);
 			Location locNomeArquivo = mNomeArquivo.getTarget();
@@ -462,7 +463,7 @@ public class ArchiveAdm {
 			/* Nova captura */
 			s = new Screen();
 
-			Pattern salvarBtn = new Pattern(getClass().getResource("/prints/salvar.png")).similar(0.3);
+			Pattern salvarBtn = getPatternFromJar("/prints/salvar.png",0.3);
 
 			Match mSalvar = s.wait(salvarBtn, 10);
 			Location locSalvar = mSalvar.getTarget();
@@ -502,7 +503,7 @@ public class ArchiveAdm {
 			s.keyUp(Key.WIN);
 			Thread.sleep(3000);
 			s = new Screen();
-			Pattern impressoraBtn = new Pattern(getClass().getResource("/prints/tipoimpressora.png")).similar(0.4);
+			Pattern impressoraBtn = getPatternFromJar("/prints/tipoimpressora.png",0.4);
 			Match mImpressora = s.wait(impressoraBtn, 10);
 			Location locImpressora = mImpressora.getTarget();
 			robot.mouseMove(locImpressora.getX(), locImpressora.getY());
@@ -512,8 +513,7 @@ public class ArchiveAdm {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern impressoraUnselectBtn = new Pattern(getClass().getResource("/prints/comopdfunselected.png"))
-					.similar(0.4);
+			Pattern impressoraUnselectBtn = getPatternFromJar("/prints/comopdfunselected.png",0.4);
 			Match mImpressoraUnselected = s.wait(impressoraUnselectBtn, 10);
 			Location locImpressoraUnselected = mImpressoraUnselected.getTarget();
 
@@ -524,8 +524,7 @@ public class ArchiveAdm {
 				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 				Thread.sleep(3000);
 			} else {
-				Pattern impressoraSelectBtn = new Pattern(getClass().getResource("/prints/comopdfselected.png"))
-						.similar(0.4);
+				Pattern impressoraSelectBtn = getPatternFromJar("/prints/comopdfselected.png",0.4);
 				Match mImpressoraSelected = s.wait(impressoraSelectBtn, 10);
 				Location locImpressoraSelected = mImpressoraSelected.getTarget();
 				robot.mouseMove(locImpressoraSelected.getX(), locImpressoraSelected.getY());
@@ -539,7 +538,7 @@ public class ArchiveAdm {
 			/* Nova captura */
 			s = new Screen();
 
-			Pattern imprimirChromeBtn = new Pattern(getClass().getResource("/prints/salvarchrome.png")).similar(0.3);
+			Pattern imprimirChromeBtn = getPatternFromJar("/prints/salvarchrome.png",0.3);
 
 			Match mImprimirChrome = s.wait(imprimirChromeBtn, 10);
 			Location locImprimirChrome = mImprimirChrome.getTarget();
@@ -558,7 +557,7 @@ public class ArchiveAdm {
 			/* Nova captura */
 			s = new Screen();
 
-			Pattern caminhoSalvar = new Pattern(getClass().getResource("/prints/caminhoSalvar.png")).similar(0.3);
+			Pattern caminhoSalvar = getPatternFromJar("/prints/caminhoSalvar.png",0.3);
 
 			Match mCaminhoSalvar = s.wait(caminhoSalvar, 10);
 			Location locCaminhoSalvar = mCaminhoSalvar.getTarget();
@@ -600,7 +599,7 @@ public class ArchiveAdm {
 			/* Nova captura */
 			s = new Screen();
 
-			Pattern nomeArquivo = new Pattern(getClass().getResource("/prints/nomeArquivo.png")).similar(0.3);
+			Pattern nomeArquivo = getPatternFromJar("/prints/nomeArquivo.png",0.3);
 
 			Match mNomeArquivo = s.wait(nomeArquivo, 10);
 			Location locNomeArquivo = mNomeArquivo.getTarget();
@@ -620,7 +619,7 @@ public class ArchiveAdm {
 			/* Nova captura */
 			s = new Screen();
 
-			Pattern salvarBtn = new Pattern(getClass().getResource("/prints/salvar.png")).similar(0.3);
+			Pattern salvarBtn = getPatternFromJar("/prints/salvar.png",0.3);
 
 			Match mSalvar = s.wait(salvarBtn, 10);
 			Location locSalvar = mSalvar.getTarget();
@@ -638,5 +637,33 @@ public class ArchiveAdm {
 		System.out.println("Extrato salvo com sucesso.");
 
 	}
+    
+
+    public Pattern getPatternFromJar(String resourcePath, double similar) throws IOException {
+        InputStream is = getClass().getResourceAsStream(resourcePath);
+        if (is == null) {
+            throw new IOException("Recurso não encontrado no JAR: " + resourcePath);
+        }
+
+        // Cria arquivo temporário
+        String tempFileName = new File(resourcePath).getName();
+        File tempFile = File.createTempFile("sikuli_", "_" + tempFileName);
+        tempFile.deleteOnExit();
+
+        try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = is.read(buffer)) != -1) {
+                fos.write(buffer, 0, read);
+            }
+        } finally {
+            is.close();
+        }
+
+        return new Pattern(tempFile.getAbsolutePath()).similar(similar);
+    }
+
+
+
 
 }

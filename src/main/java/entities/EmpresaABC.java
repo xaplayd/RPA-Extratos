@@ -1,4 +1,4 @@
-package entities;
+package main.java.entities;
 
 import java.awt.Robot;
 import java.awt.event.InputEvent;
@@ -12,8 +12,8 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
 
-import utils.ArchiveAdm;
-import utils.ChromeAdm;
+import main.java.utils.ArchiveAdm;
+import main.java.utils.ChromeAdm;
 
 public class EmpresaABC {
 	
@@ -22,6 +22,7 @@ public class EmpresaABC {
 	private String user;
 	private String pass;
 	ChromeAdm chromeAdm = new ChromeAdm();
+	ArchiveAdm archiveAdm = new ArchiveAdm();
 	private String caminhoPastaSalvar;
 	private LocalDate data;
 	private String nomeArquivo;
@@ -127,7 +128,7 @@ public class EmpresaABC {
 			DateTimeFormatter iniefimFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			String dataParaInieFim = dataExtrato.format(iniefimFormatter);
 
-			Pattern consultaExtratoBtn = new Pattern(getClass().getResource("/prints/abc/consultaextrato.png")).similar(0.6);
+			Pattern consultaExtratoBtn = archiveAdm.getPatternFromJar("/prints/abc/consultaextrato.png",0.6);
 			Match mConsultaExtrato = s.wait(consultaExtratoBtn, 10);
 			Location locConsultaExtrato = mConsultaExtrato.getTarget();
 			robot.mouseMove(locConsultaExtrato.getX(), locConsultaExtrato.getY());
@@ -142,7 +143,8 @@ public class EmpresaABC {
 			
 			
 			s = new Screen();
-			Pattern hojeBtn = new Pattern(getClass().getResource("/prints/abc/hoje.png")).similar(0.6);
+			
+			Pattern hojeBtn = archiveAdm.getPatternFromJar("/prints/abc/hoje.png",0.6);
 			Match mHoje = s.wait(hojeBtn, 10);
 			Location locHoje = mHoje.getTarget();
 			robot.mouseMove(locHoje.getX(), locHoje.getY());
@@ -159,7 +161,7 @@ public class EmpresaABC {
 			
 			
 			s = new Screen();
-			Pattern detalhadoBtn = new Pattern(getClass().getResource("/prints/abc/detalhado.png")).similar(0.6);
+			Pattern detalhadoBtn = archiveAdm.getPatternFromJar("/prints/abc/detalhado.png",0.6);
 			Match mDetalhado = s.wait(detalhadoBtn, 10);
 			Location locDetalhado = mDetalhado.getTarget();
 			robot.mouseMove(locDetalhado.getX(), locDetalhado.getY());
@@ -169,7 +171,7 @@ public class EmpresaABC {
 			Thread.sleep(3000);
 			
 			s = new Screen();
-			Pattern filtrarBtn = new Pattern(getClass().getResource("/prints/abc/filtrar.png")).similar(0.6);
+			Pattern filtrarBtn = archiveAdm.getPatternFromJar("/prints/abc/filtrar.png",0.6);
 			Match mFiltrar = s.wait(filtrarBtn, 10);
 			Location locFiltrar = mFiltrar.getTarget();
 			robot.mouseMove(locFiltrar.getX(), locFiltrar.getY());
@@ -179,7 +181,7 @@ public class EmpresaABC {
 			Thread.sleep(10000);
 			
 			s = new Screen();
-			Pattern baixarBtn = new Pattern(getClass().getResource("/prints/abc/baixar.png")).similar(0.6);
+			Pattern baixarBtn = archiveAdm.getPatternFromJar("/prints/abc/baixar.png",0.6);
 			Match mBaixar = s.wait(baixarBtn, 10);
 			Location locBaixar = mBaixar.getTarget();
 			robot.mouseMove(locBaixar.getX(), locBaixar.getY());
@@ -189,7 +191,7 @@ public class EmpresaABC {
 			Thread.sleep(3000);
 			
 			s = new Screen();
-			Pattern pdfBtn = new Pattern(getClass().getResource("/prints/abc/pdf.png")).similar(0.6);
+			Pattern pdfBtn = archiveAdm.getPatternFromJar("/prints/abc/pdf.png",0.6);
 			Match mPdf = s.wait(pdfBtn, 10);
 			Location locPdf = mPdf.getTarget();
 			robot.mouseMove(locPdf.getX(), locPdf.getY());
@@ -197,10 +199,8 @@ public class EmpresaABC {
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			Thread.sleep(10000);
-
-			ArchiveAdm arquivo = new ArchiveAdm();
 			
-			arquivo.salvarArquivoABC(nomeArquivo, caminhoPastaSalvar, data);
+			archiveAdm.salvarArquivoABC(nomeArquivo, caminhoPastaSalvar, data);
 			
 			
 

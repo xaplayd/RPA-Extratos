@@ -1,4 +1,4 @@
-package utils;
+package main.java.utils;
 
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -7,6 +7,9 @@ import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,15 +21,17 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
 
-import entities.EmpresaABC;
-import entities.EmpresaBB;
-import entities.EmpresaCEF;
-import entities.EmpresaSANTANDER;
-import entities.EmpresaSICREDI;
+import main.java.application.AppMain;
+import main.java.entities.EmpresaABC;
+import main.java.entities.EmpresaBB;
+import main.java.entities.EmpresaCEF;
+import main.java.entities.EmpresaSANTANDER;
+import main.java.entities.EmpresaSICREDI;
 
 public class AppLogger {
 
 	ChromeAdm chromeAdm = new ChromeAdm();
+	ArchiveAdm archiveAdm = new ArchiveAdm();
 
 	public EmpresaBB logarBB(Integer empresa, Integer filial) {
 
@@ -38,39 +43,49 @@ public class AppLogger {
 		chromeAdm.abreChromeBB();
 
 		EmpresaBB tempEmpresa = new EmpresaBB();
-
-		String caminho = "src/data/acessBB.csv";
 		List<EmpresaBB> empresas = new ArrayList<>();
 
-		try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
+		// Obtém o arquivo CSV do classpath (resources/data/acessBB.csv)
+		InputStream is = AppMain.class.getResourceAsStream("/data/acessBB.csv");
+		if (is == null) {
+		    System.out.println("Erro: arquivo '/data/acessBB.csv' não encontrado no classpath!");
+		} else {
+		    try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
 
-			String linha;
+		        String linha;
 
-			br.readLine();
+		        // Pula o cabeçalho
+		        br.readLine();
 
-			while ((linha = br.readLine()) != null) {
-				String[] campos = linha.split(";");
+		        while ((linha = br.readLine()) != null) {
+		            String[] campos = linha.split(";");
 
-				if (campos.length < 4)
-					continue;
+		            if (campos.length < 4) continue;
 
-				Integer codEmp = Integer.parseInt(campos[0].trim());
-				Integer codFil = Integer.parseInt(campos[1].trim());
-				String chaveJ = campos[2].trim();
-				String pass = campos[3].trim();
+		            try {
+		                Integer codEmp = Integer.parseInt(campos[0].trim());
+		                Integer codFil = Integer.parseInt(campos[1].trim());
+		                String chaveJ = campos[2].trim();
+		                String pass = campos[3].trim();
 
-				EmpresaBB e = new EmpresaBB(codEmp, codFil, chaveJ, pass);
-				empresas.add(e);
-			}
+		                EmpresaBB e = new EmpresaBB(codEmp, codFil, chaveJ, pass);
+		                empresas.add(e);
+		            } catch (NumberFormatException ex) {
+		                System.out.println("Linha ignorada por formato inválido: " + linha);
+		            }
+		        }
 
-		} catch (IOException e) {
-			System.out.println("Erro ao ler arquivo: " + e.getMessage());
+		    } catch (IOException e) {
+		        System.out.println("Erro ao ler arquivo: " + e.getMessage());
+		    }
 		}
 
+		// Procura a empresa e filial desejada
 		for (EmpresaBB emp : empresas) {
-			if (emp.getCodEmp().equals(empresa) && emp.getCodFil().equals(filial)) {
-				tempEmpresa = emp;
-			}
+		    if (emp.getCodEmp().equals(empresa) && emp.getCodFil().equals(filial)) {
+		        tempEmpresa = emp;
+		        break; // opcional, se só precisa de um match
+		    }
 		}
 
 		try {
@@ -143,38 +158,48 @@ public class AppLogger {
 
 		EmpresaABC tempEmpresa = new EmpresaABC();
 
-		String caminho = "src/data/acessABC.csv";
 		List<EmpresaABC> empresas = new ArrayList<>();
 
-		try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
+		// Obtém o arquivo CSV do classpath (resources/data/acessABC.csv)
+		InputStream is = AppMain.class.getResourceAsStream("/data/acessABC.csv");
+		if (is == null) {
+		    System.out.println("Erro: arquivo '/data/acessABC.csv' não encontrado no classpath!");
+		} else {
+		    try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
 
-			String linha;
+		        String linha;
 
-			br.readLine();
+		        // Pula o cabeçalho
+		        br.readLine();
 
-			while ((linha = br.readLine()) != null) {
-				String[] campos = linha.split(";");
+		        while ((linha = br.readLine()) != null) {
+		            String[] campos = linha.split(";");
+		            if (campos.length < 4) continue;
 
-				if (campos.length < 4)
-					continue;
+		            try {
+		                Integer codEmp = Integer.parseInt(campos[0].trim());
+		                Integer codFil = Integer.parseInt(campos[1].trim());
+		                String user = campos[2].trim();
+		                String pass = campos[3].trim();
 
-				Integer codEmp = Integer.parseInt(campos[0].trim());
-				Integer codFil = Integer.parseInt(campos[1].trim());
-				String user = campos[2].trim();
-				String pass = campos[3].trim();
+		                EmpresaABC e = new EmpresaABC(codEmp, codFil, user, pass);
+		                empresas.add(e);
+		            } catch (NumberFormatException ex) {
+		                System.out.println("Linha ignorada por formato inválido: " + linha);
+		            }
+		        }
 
-				EmpresaABC e = new EmpresaABC(codEmp, codFil, user, pass);
-				empresas.add(e);
-			}
-
-		} catch (IOException e) {
-			System.out.println("Erro ao ler arquivo: " + e.getMessage());
+		    } catch (IOException e) {
+		        System.out.println("Erro ao ler arquivo: " + e.getMessage());
+		    }
 		}
 
+		// Procura a empresa e filial desejada
 		for (EmpresaABC emp : empresas) {
-			if (emp.getCodEmp().equals(empresa) && emp.getCodFil().equals(filial)) {
-				tempEmpresa = emp;
-			}
+		    if (emp.getCodEmp().equals(empresa) && emp.getCodFil().equals(filial)) {
+		        tempEmpresa = emp;
+		        break; // opcional, se só precisa de um match
+		    }
 		}
 
 		try {
@@ -204,7 +229,7 @@ public class AppLogger {
 
 
 			s = new Screen();
-			Pattern digitaCpfBtn = new Pattern(getClass().getResource("/prints/abc/digitacpfabc.png")).similar(0.6);
+			Pattern digitaCpfBtn = archiveAdm.getPatternFromJar("/prints/abc/digitacpfabc.png",0.6);
 			Match mDigitaCpf = s.wait(digitaCpfBtn, 10);
 			Location locDigitaCpf = mDigitaCpf.getTarget();
 			robot.mouseMove(locDigitaCpf.getX(), locDigitaCpf.getY());
@@ -230,7 +255,7 @@ public class AppLogger {
 
 			s = new Screen();
 
-			Pattern numeroDoisBtn = new Pattern(getClass().getResource("/prints/abc/2esquerda.png")).similar(0.7);
+			Pattern numeroDoisBtn = archiveAdm.getPatternFromJar("/prints/abc/2esquerda.png",0.7);
 			Match mNumeroDois = s.exists(numeroDoisBtn, 10);
 			Location locNumeroDois;
 
@@ -253,7 +278,7 @@ public class AppLogger {
 
 				s = new Screen();
 
-				numeroDoisBtn = new Pattern(getClass().getResource("/prints/abc/2direita.png")).similar(0.7);
+				numeroDoisBtn = archiveAdm.getPatternFromJar("/prints/abc/2direita.png",0.7);
 				mNumeroDois = s.wait(numeroDoisBtn, 10);
 				locNumeroDois = mNumeroDois.getTarget();
 			}
@@ -273,7 +298,7 @@ public class AppLogger {
 
 			s = new Screen();
 
-			Pattern numeroSeisBtn = new Pattern(getClass().getResource("/prints/abc/6esquerda.png")).similar(0.7);
+			Pattern numeroSeisBtn = archiveAdm.getPatternFromJar("/prints/abc/6esquerda.png",0.7);
 			Match mNumeroSeis = s.exists(numeroSeisBtn, 10);
 			Location locNumeroSeis;
 			if (mNumeroSeis != null) {
@@ -295,7 +320,7 @@ public class AppLogger {
 
 				s = new Screen();
 
-				numeroSeisBtn = new Pattern(getClass().getResource("/prints/abc/6direita.png")).similar(0.7);
+				numeroSeisBtn = archiveAdm.getPatternFromJar("/prints/abc/6direita.png",0.7);
 				mNumeroSeis = s.wait(numeroSeisBtn, 10);
 				locNumeroSeis = mNumeroSeis.getTarget();
 			}
@@ -320,7 +345,7 @@ public class AppLogger {
 
 			s = new Screen();
 
-			Pattern numeroCincoBtn = new Pattern(getClass().getResource("/prints/abc/5esquerda.png")).similar(0.7);
+			Pattern numeroCincoBtn = archiveAdm.getPatternFromJar("/prints/abc/5esquerda.png",0.7);
 			Match mNumeroCinco = s.exists(numeroCincoBtn, 10);
 			Location locNumeroCinco;
 			if (mNumeroCinco != null) {
@@ -341,7 +366,7 @@ public class AppLogger {
 
 				s = new Screen();
 
-				numeroCincoBtn = new Pattern(getClass().getResource("/prints/abc/5direita.png")).similar(0.7);
+				numeroCincoBtn = archiveAdm.getPatternFromJar("/prints/abc/5direita.png",0.7);
 				mNumeroCinco = s.wait(numeroCincoBtn, 10);
 				locNumeroCinco = mNumeroCinco.getTarget();
 			}
@@ -360,7 +385,7 @@ public class AppLogger {
 
 			s = new Screen();
 
-			Pattern numeroUmBtn = new Pattern(getClass().getResource("/prints/abc/1esquerda.png")).similar(0.7);
+			Pattern numeroUmBtn = archiveAdm.getPatternFromJar("/prints/abc/1esquerda.png",0.7);
 			Match mNumeroUm = s.exists(numeroUmBtn, 10);
 			Location locNumeroUm;
 			if (mNumeroUm != null) {
@@ -381,7 +406,7 @@ public class AppLogger {
 
 				s = new Screen();
 
-				numeroUmBtn = new Pattern(getClass().getResource("/prints/abc/1direita.png")).similar(0.7);
+				numeroUmBtn = archiveAdm.getPatternFromJar("/prints/abc/1direita.png",0.7);
 				mNumeroUm = s.wait(numeroUmBtn, 10);
 				locNumeroUm = mNumeroUm.getTarget();
 			}
@@ -412,7 +437,7 @@ public class AppLogger {
 
 			s = new Screen();
 
-			Pattern numeroQuatroBtn = new Pattern(getClass().getResource("/prints/abc/4esquerda.png")).similar(0.7);
+			Pattern numeroQuatroBtn = archiveAdm.getPatternFromJar("/prints/abc/4esquerda.png",0.7);
 			Match mNumeroQuatro = s.exists(numeroQuatroBtn, 10);
 			Location locNumeroQuatro;
 			if (mNumeroQuatro != null) {
@@ -433,7 +458,7 @@ public class AppLogger {
 
 				s = new Screen();
 
-				numeroQuatroBtn = new Pattern(getClass().getResource("/prints/abc/4direita.png")).similar(0.7);
+				numeroQuatroBtn = archiveAdm.getPatternFromJar("/prints/abc/4direita.png",0.7);
 				mNumeroQuatro = s.wait(numeroQuatroBtn, 10);
 				locNumeroQuatro = mNumeroQuatro.getTarget();
 			}
@@ -445,7 +470,7 @@ public class AppLogger {
 
 			s = new Screen();
 
-			Pattern entrarBtn = new Pattern(getClass().getResource("/prints/abc/entrarabc.png")).similar(0.6);
+			Pattern entrarBtn = archiveAdm.getPatternFromJar("/prints/abc/entrarabc.png",0.6);
 			Match mEntrar = s.wait(entrarBtn, 10);
 			Location locEntrar = mEntrar.getTarget();
 			robot.mouseMove(locEntrar.getX(), locEntrar.getY());
@@ -489,42 +514,53 @@ public class AppLogger {
 		chromeAdm.abreChromeSICREDI();
 
 		EmpresaSICREDI tempEmpresa = new EmpresaSICREDI();
-
-		String caminho = "src/data/acessSICREDI.csv";
 		List<EmpresaSICREDI> empresas = new ArrayList<>();
 
-		try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
+		// Obtém o arquivo CSV do classpath (resources/data/acessSICREDI.csv)
+		InputStream is = AppMain.class.getResourceAsStream("/data/acessSICREDI.csv");
+		if (is == null) {
+		    System.out.println("Erro: arquivo '/data/acessSICREDI.csv' não encontrado no classpath!");
+		} else {
+		    try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
 
-			String linha;
+		        String linha;
 
-			br.readLine();
+		        // Pula o cabeçalho
+		        br.readLine();
 
-			while ((linha = br.readLine()) != null) {
-				String[] campos = linha.split(";");
+		        while ((linha = br.readLine()) != null) {
+		            String[] campos = linha.split(";");
 
-				if (campos.length < 6)
-					continue;
+		            if (campos.length < 6) continue;
 
-				Integer codEmp = Integer.parseInt(campos[0].trim());
-				Integer codFil = Integer.parseInt(campos[1].trim());
-				String user = campos[2].trim();
-				String pass = campos[3].trim();
-				String trans = campos[4].trim();
-				String cnpj = campos[5].trim();
+		            try {
+		                Integer codEmp = Integer.parseInt(campos[0].trim());
+		                Integer codFil = Integer.parseInt(campos[1].trim());
+		                String user = campos[2].trim();
+		                String pass = campos[3].trim();
+		                String trans = campos[4].trim();
+		                String cnpj = campos[5].trim();
 
-				EmpresaSICREDI e = new EmpresaSICREDI(codEmp, codFil, user, pass, trans, cnpj);
-				empresas.add(e);
-			}
+		                EmpresaSICREDI e = new EmpresaSICREDI(codEmp, codFil, user, pass, trans, cnpj);
+		                empresas.add(e);
+		            } catch (NumberFormatException ex) {
+		                System.out.println("Linha ignorada por formato inválido: " + linha);
+		            }
+		        }
 
-		} catch (IOException e) {
-			System.out.println("Erro ao ler arquivo: " + e.getMessage());
+		    } catch (IOException e) {
+		        System.out.println("Erro ao ler arquivo: " + e.getMessage());
+		    }
 		}
 
+		// Procura a empresa e filial desejada
 		for (EmpresaSICREDI emp : empresas) {
-			if (emp.getCodEmp().equals(empresa) && emp.getCodFil().equals(filial)) {
-				tempEmpresa = emp;
-			}
+		    if (emp.getCodEmp().equals(empresa) && emp.getCodFil().equals(filial)) {
+		        tempEmpresa = emp;
+		        break; // opcional, se só precisa de um match
+		    }
 		}
+
 
 		try {
 			Screen s = new Screen();
@@ -554,7 +590,7 @@ public class AppLogger {
 			// Colar no campo desejado
 			s.type("v", KeyModifier.CTRL);
 
-			Pattern acessarBtn = new Pattern(getClass().getResource("/prints/sicredi/acessar.png")).similar(0.6);
+			Pattern acessarBtn = archiveAdm.getPatternFromJar("/prints/sicredi/acessar.png",0.6);
 			Match mAcessar = s.wait(acessarBtn, 10);
 			Location locAcessar = mAcessar.getTarget();
 			robot.mouseMove(locAcessar.getX(), locAcessar.getY());
@@ -574,8 +610,7 @@ public class AppLogger {
 			System.out.println("Tela de login carregada.");
 
 			s = new Screen();
-			Pattern usuarioAcessoBtn = new Pattern(getClass().getResource("/prints/sicredi/usuarioAcesso.png"))
-					.similar(0.6);
+			Pattern usuarioAcessoBtn = archiveAdm.getPatternFromJar("/prints/sicredi/usuarioAcesso.png",0.6);
 			Match mUsuarioAcesso = s.wait(usuarioAcessoBtn, 10);
 			Location locUsuarioAcesso = mUsuarioAcesso.getTarget();
 			robot.mouseMove(locUsuarioAcesso.getX(), locUsuarioAcesso.getY());
@@ -590,8 +625,7 @@ public class AppLogger {
 			s.type("v", KeyModifier.CTRL);
 			Thread.sleep(1000);
 
-			Pattern informaSenhaBtn = new Pattern(getClass().getResource("/prints/sicredi/informasenha.png"))
-					.similar(0.6);
+			Pattern informaSenhaBtn = archiveAdm.getPatternFromJar("/prints/sicredi/informasenha.png",0.6);
 			Match mInformaSenha = s.wait(informaSenhaBtn, 10);
 			Location locInformaSenha = mInformaSenha.getTarget();
 			robot.mouseMove(locInformaSenha.getX(), locInformaSenha.getY());
@@ -608,7 +642,7 @@ public class AppLogger {
 			s = new Screen();
 			Thread.sleep(1500);
 
-			Pattern numeroZeroBtn = new Pattern(getClass().getResource("/prints/sicredi/0esquerda.png")).similar(0.7);
+			Pattern numeroZeroBtn = archiveAdm.getPatternFromJar("/prints/sicredi/0esquerda.png",0.7);
 			Match mNumeroZero = s.exists(numeroZeroBtn, 10);
 			Location locNumeroZero;
 			if (mNumeroZero != null) {
@@ -628,7 +662,7 @@ public class AppLogger {
 				s = new Screen();
 				Thread.sleep(1500);
 
-				numeroZeroBtn = new Pattern(getClass().getResource("/prints/sicredi/0direita.png")).similar(0.7);
+				numeroZeroBtn = archiveAdm.getPatternFromJar("/prints/sicredi/0direita.png",0.7);
 				mNumeroZero = s.wait(numeroZeroBtn, 10);
 				locNumeroZero = mNumeroZero.getTarget();
 			}
@@ -647,7 +681,7 @@ public class AppLogger {
 			s = new Screen();
 			Thread.sleep(1500);
 
-			Pattern numeroUmBtn = new Pattern(getClass().getResource("/prints/sicredi/1esquerda.png")).similar(0.7);
+			Pattern numeroUmBtn = archiveAdm.getPatternFromJar("/prints/sicredi/1esquerda.png",0.7);
 			Match mNumeroUm = s.exists(numeroUmBtn, 10);
 			Location locNumeroUm;
 			if (mNumeroUm != null) {
@@ -666,7 +700,7 @@ public class AppLogger {
 				s = new Screen();
 				Thread.sleep(1500);
 
-				numeroUmBtn = new Pattern(getClass().getResource("/prints/sicredi/1direita.png")).similar(0.7);
+				numeroUmBtn = archiveAdm.getPatternFromJar("/prints/sicredi/1direita.png",0.7);
 				mNumeroUm = s.wait(numeroUmBtn, 10);
 				locNumeroUm = mNumeroUm.getTarget();
 			}
@@ -691,7 +725,7 @@ public class AppLogger {
 			s = new Screen();
 			Thread.sleep(1500);
 
-			Pattern numeroDoisBtn = new Pattern(getClass().getResource("/prints/sicredi/2esquerda.png")).similar(0.7);
+			Pattern numeroDoisBtn = archiveAdm.getPatternFromJar("/prints/sicredi/2esquerda.png",0.7);
 			Match mNumeroDois = s.exists(numeroDoisBtn, 10);
 			Location locNumeroDois;
 			if (mNumeroDois != null) {
@@ -709,7 +743,7 @@ public class AppLogger {
 				s = new Screen();
 				Thread.sleep(1500);
 
-				numeroDoisBtn = new Pattern(getClass().getResource("/prints/sicredi/2direita.png")).similar(0.7);
+				numeroDoisBtn = archiveAdm.getPatternFromJar("/prints/sicredi/2direita.png",0.7);
 				mNumeroDois = s.wait(numeroDoisBtn, 10);
 				locNumeroDois = mNumeroDois.getTarget();
 			}
@@ -728,7 +762,7 @@ public class AppLogger {
 			s = new Screen();
 			Thread.sleep(1500);
 
-			Pattern numeroTresBtn = new Pattern(getClass().getResource("/prints/sicredi/3esquerda.png")).similar(0.7);
+			Pattern numeroTresBtn = archiveAdm.getPatternFromJar("/prints/sicredi/3esquerda.png",0.7);
 			Match mNumeroTres = s.exists(numeroTresBtn, 10);
 			Location locNumeroTres;
 			if (mNumeroTres != null) {
@@ -747,7 +781,7 @@ public class AppLogger {
 				s = new Screen();
 				Thread.sleep(1500);
 
-				numeroTresBtn = new Pattern(getClass().getResource("/prints/sicredi/3direita.png")).similar(0.7);
+				numeroTresBtn = archiveAdm.getPatternFromJar("/prints/sicredi/3direita.png",0.7);
 				mNumeroTres = s.wait(numeroTresBtn, 10);
 				locNumeroTres = mNumeroTres.getTarget();
 			}
@@ -766,7 +800,7 @@ public class AppLogger {
 
 			s = new Screen();
 
-			acessarBtn = new Pattern(getClass().getResource("/prints/sicredi/acessar.png")).similar(0.6);
+			acessarBtn = archiveAdm.getPatternFromJar("/prints/sicredi/acessar.png",0.6);
 			mAcessar = s.wait(acessarBtn, 10);
 			locAcessar = mAcessar.getTarget();
 			robot.mouseMove(locAcessar.getX(), locAcessar.getY());
@@ -808,42 +842,53 @@ public class AppLogger {
 		chromeAdm.abreChromeSANTANDER();
 
 		EmpresaSANTANDER tempEmpresa = new EmpresaSANTANDER();
-
-		String caminho = "src/data/acessSANTANDER.csv";
 		List<EmpresaSANTANDER> empresas = new ArrayList<>();
 
-		try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
+		// Obtém o arquivo CSV do classpath (resources/data/acessSANTANDER.csv)
+		InputStream is = AppMain.class.getResourceAsStream("/data/acessSANTANDER.csv");
+		if (is == null) {
+		    System.out.println("Erro: arquivo '/data/acessSANTANDER.csv' não encontrado no classpath!");
+		} else {
+		    try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
 
-			String linha;
+		        String linha;
 
-			br.readLine();
+		        // Pula o cabeçalho
+		        br.readLine();
 
-			while ((linha = br.readLine()) != null) {
-				String[] campos = linha.split(";");
+		        while ((linha = br.readLine()) != null) {
+		            String[] campos = linha.split(";");
 
-				if (campos.length < 6)
-					continue;
+		            if (campos.length < 6) continue;
 
-				Integer codEmp = Integer.parseInt(campos[0].trim());
-				Integer codFil = Integer.parseInt(campos[1].trim());
-				String agencia = campos[2].trim();
-				String conta = campos[3].trim();
-				String user = campos[4].trim();
-				String pass = campos[5].trim();
+		            try {
+		                Integer codEmp = Integer.parseInt(campos[0].trim());
+		                Integer codFil = Integer.parseInt(campos[1].trim());
+		                String agencia = campos[2].trim();
+		                String conta = campos[3].trim();
+		                String user = campos[4].trim();
+		                String pass = campos[5].trim();
 
-				EmpresaSANTANDER e = new EmpresaSANTANDER(codEmp, codFil, agencia, conta, user, pass);
-				empresas.add(e);
-			}
+		                EmpresaSANTANDER e = new EmpresaSANTANDER(codEmp, codFil, agencia, conta, user, pass);
+		                empresas.add(e);
+		            } catch (NumberFormatException ex) {
+		                System.out.println("Linha ignorada por formato inválido: " + linha);
+		            }
+		        }
 
-		} catch (IOException e) {
-			System.out.println("Erro ao ler arquivo: " + e.getMessage());
+		    } catch (IOException e) {
+		        System.out.println("Erro ao ler arquivo: " + e.getMessage());
+		    }
 		}
 
+		// Procura a empresa e filial desejada
 		for (EmpresaSANTANDER emp : empresas) {
-			if (emp.getCodEmp().equals(empresa) && emp.getCodFil().equals(filial)) {
-				tempEmpresa = emp;
-			}
+		    if (emp.getCodEmp().equals(empresa) && emp.getCodFil().equals(filial)) {
+		        tempEmpresa = emp;
+		        break; // para no primeiro match
+		    }
 		}
+
 		try {
 			Screen s = new Screen();
 
@@ -861,8 +906,7 @@ public class AppLogger {
 				Thread.sleep(500); // espera estabilizar
 			}
 
-			Pattern pessoaFisicaBtn = new Pattern(getClass().getResource("/prints/santander/pessoafisica.png"))
-					.similar(0.6);
+			Pattern pessoaFisicaBtn = archiveAdm.getPatternFromJar("/prints/santander/pessoafisica.png",0.6);
 			Match mPessoaFisica = s.wait(pessoaFisicaBtn, 10);
 			Location locPessoaFisica = mPessoaFisica.getTarget();
 			robot.mouseMove(locPessoaFisica.getX(), locPessoaFisica.getY());
@@ -872,8 +916,7 @@ public class AppLogger {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern pessoaJuridicaBtn = new Pattern(getClass().getResource("/prints/santander/pessoajuridica.png"))
-					.similar(0.6);
+			Pattern pessoaJuridicaBtn = archiveAdm.getPatternFromJar("/prints/santander/pessoajuridica.png",0.6);
 			Match mPessoaJuridica = s.wait(pessoaJuridicaBtn, 10);
 			Location locPessoaJuridica = mPessoaJuridica.getTarget();
 			robot.mouseMove(locPessoaJuridica.getX(), locPessoaJuridica.getY());
@@ -883,7 +926,7 @@ public class AppLogger {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern agenciaBtn = new Pattern(getClass().getResource("/prints/santander/agencia.png")).similar(0.6);
+			Pattern agenciaBtn = archiveAdm.getPatternFromJar("/prints/santander/agencia.png",0.6);
 			Match mAgencia = s.wait(agenciaBtn, 10);
 			Location locAgencia = mAgencia.getTarget();
 			robot.mouseMove(locAgencia.getX(), locAgencia.getY());
@@ -957,41 +1000,51 @@ public class AppLogger {
 		chromeAdm.abreChromeCEF();
 
 		EmpresaCEF tempEmpresa = new EmpresaCEF();
-
-		String caminho = "src/data/acessCEF.csv";
 		List<EmpresaCEF> empresas = new ArrayList<>();
 
-		try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
+		// Obtém o arquivo CSV do classpath (resources/data/acessCEF.csv)
+		InputStream is = AppMain.class.getResourceAsStream("/data/acessCEF.csv");
+		if (is == null) {
+		    System.out.println("Erro: arquivo '/data/acessCEF.csv' não encontrado no classpath!");
+		} else {
+		    try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
 
-			String linha;
+		        String linha;
 
-			br.readLine();
+		        // Pula o cabeçalho
+		        br.readLine();
 
-			while ((linha = br.readLine()) != null) {
-				String[] campos = linha.split(";");
+		        while ((linha = br.readLine()) != null) {
+		            String[] campos = linha.split(";");
 
-				if (campos.length < 4)
-					continue;
+		            if (campos.length < 4) continue;
 
-				Integer codEmp = Integer.parseInt(campos[0].trim());
-				Integer codFil = Integer.parseInt(campos[1].trim());
-				String user = campos[2].trim();
-				String pass = campos[3].trim();
+		            try {
+		                Integer codEmp = Integer.parseInt(campos[0].trim());
+		                Integer codFil = Integer.parseInt(campos[1].trim());
+		                String user = campos[2].trim();
+		                String pass = campos[3].trim();
 
+		                EmpresaCEF e = new EmpresaCEF(codEmp, codFil, user, pass);
+		                empresas.add(e);
+		            } catch (NumberFormatException ex) {
+		                System.out.println("Linha ignorada por formato inválido: " + linha);
+		            }
+		        }
 
-				EmpresaCEF e = new EmpresaCEF(codEmp, codFil, user, pass);
-				empresas.add(e);
-			}
-
-		} catch (IOException e) {
-			System.out.println("Erro ao ler arquivo: " + e.getMessage());
+		    } catch (IOException e) {
+		        System.out.println("Erro ao ler arquivo: " + e.getMessage());
+		    }
 		}
 
+		// Procura a empresa e filial desejada
 		for (EmpresaCEF emp : empresas) {
-			if (emp.getCodEmp().equals(empresa) && emp.getCodFil().equals(filial)) {
-				tempEmpresa = emp;
-			}
+		    if (emp.getCodEmp().equals(empresa) && emp.getCodFil().equals(filial)) {
+		        tempEmpresa = emp;
+		        break; // para no primeiro match
+		    }
 		}
+
 		try {
 			Screen s = new Screen();
 
@@ -1009,8 +1062,7 @@ public class AppLogger {
 				Thread.sleep(500); // espera estabilizar
 			}
 
-			Pattern empresasBtn = new Pattern(getClass().getResource("/prints/cef/empresas.png"))
-					.similar(0.6);
+			Pattern empresasBtn = archiveAdm.getPatternFromJar("/prints/cef/empresas.png",0.6);
 			Match mEmpresas = s.wait(empresasBtn, 10);
 			Location locEmpresas = mEmpresas.getTarget();
 			robot.mouseMove(locEmpresas.getX(), locEmpresas.getY());
@@ -1024,8 +1076,7 @@ public class AppLogger {
 			}
 
 			s = new Screen();
-			Pattern acessarGerenciadorBtn = new Pattern(getClass().getResource("/prints/cef/acessargerenciador.png"))
-					.similar(0.6);
+			Pattern acessarGerenciadorBtn = archiveAdm.getPatternFromJar("/prints/cef/acessargerenciador.png",0.6);
 			Match mAcessarGerenciador = s.wait(acessarGerenciadorBtn, 10);
 			Location locAcessarGerenciador = mAcessarGerenciador.getTarget();
 			robot.mouseMove(locAcessarGerenciador.getX(), locAcessarGerenciador.getY());
@@ -1049,7 +1100,7 @@ public class AppLogger {
 			s.type(Key.ENTER);
 			
 			s = new Screen();
-			Pattern permitirDessaVezBtn = new Pattern(getClass().getResource("/prints/cef/permitirdessavez.png")).similar(0.6);
+			Pattern permitirDessaVezBtn = archiveAdm.getPatternFromJar("/prints/cef/permitirdessavez.png",0.6);
 			Match mPermitirDessaVez = s.wait(permitirDessaVezBtn, 10);
 			Location locPermitirDessaVez = mPermitirDessaVez.getTarget();
 			robot.mouseMove(locPermitirDessaVez.getX(), locPermitirDessaVez.getY());

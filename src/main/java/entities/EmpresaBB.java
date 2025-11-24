@@ -1,4 +1,4 @@
-package entities;
+package main.java.entities;
 
 import java.awt.Robot;
 import java.awt.event.InputEvent;
@@ -14,8 +14,8 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
 
-import utils.ArchiveAdm;
-import utils.ChromeAdm;
+import main.java.utils.ArchiveAdm;
+import main.java.utils.ChromeAdm;
 
 public class EmpresaBB {
 	
@@ -24,6 +24,7 @@ public class EmpresaBB {
 	private String chaveJ;
 	private String pass;
 	ChromeAdm chromeAdm = new ChromeAdm();
+	ArchiveAdm archiveAdm = new ArchiveAdm();
 	private String caminhoPastaSalvar;
 	private String nomeArquivo;
 	private LocalDate data;
@@ -148,7 +149,7 @@ public class EmpresaBB {
 
 			/* Nova captura */
 			s = new Screen();
-			Pattern extratoBtn = new Pattern(getClass().getResource("/prints/extratodacontacorrente.png")).similar(0.6);
+			Pattern extratoBtn = archiveAdm.getPatternFromJar("/prints/extratodacontacorrente.png",0.6);
 
 			/* Encontra e clica */
 			Match mExtrato = s.wait(extratoBtn, 10);
@@ -164,7 +165,7 @@ public class EmpresaBB {
 			}
 
 			s = new Screen();
-			Pattern categoriaBtn = new Pattern(getClass().getResource("/prints/linhaTempo.png")).similar(0.5);
+			Pattern categoriaBtn = archiveAdm.getPatternFromJar("/prints/linhaTempo.png",0.5);
 			Match mCategoria = s.wait(categoriaBtn, 10);
 			Location locCategoria = mCategoria.getTarget();
 			robot.mouseMove(locCategoria.getX(), locCategoria.getY());
@@ -174,7 +175,7 @@ public class EmpresaBB {
 			Thread.sleep(2000);
 
 			s = new Screen();
-			Pattern periodoBtn = new Pattern(getClass().getResource("/prints/periodo.png")).similar(0.5);
+			Pattern periodoBtn = archiveAdm.getPatternFromJar("/prints/periodo.png",0.5);
 			Match mPeriodo = s.wait(periodoBtn, 10);
 			Location locPeriodo = mPeriodo.getTarget();
 			robot.mouseMove(locPeriodo.getX(), locPeriodo.getY());
@@ -184,7 +185,7 @@ public class EmpresaBB {
 			Thread.sleep(2000);
 
 			s = new Screen();
-			Pattern inicioBtn = new Pattern(getClass().getResource("/prints/datainicial.png")).similar(0.5);
+			Pattern inicioBtn = archiveAdm.getPatternFromJar("/prints/datainicial.png",0.5);
 			Match mInicio = s.wait(inicioBtn, 10);
 			Location locInicio = mInicio.getTarget();
 			robot.mouseMove(locInicio.getX(), locInicio.getY());
@@ -196,7 +197,7 @@ public class EmpresaBB {
 			s.type(dataParaInieFim);
 
 			s = new Screen();
-			Pattern fimBtn = new Pattern(getClass().getResource("/prints/datafinal.png")).similar(0.5);
+			Pattern fimBtn = archiveAdm.getPatternFromJar("/prints/datafinal.png",0.5);
 			Match mFim = s.wait(fimBtn, 10);
 			Location locFim = mFim.getTarget();
 			robot.mouseMove(locFim.getX(), locFim.getY());
@@ -210,7 +211,7 @@ public class EmpresaBB {
 			/* Nova captura */
 			s = new Screen();
 
-			Pattern okBtn = new Pattern(getClass().getResource("/prints/ok.png")).similar(0.6);
+			Pattern okBtn = archiveAdm.getPatternFromJar("/prints/ok.png",0.6);
 			Match mOk = s.wait(okBtn, 10);
 			Location locOk = mOk.getTarget();
 			robot.mouseMove(locOk.getX(), locOk.getY());
@@ -230,7 +231,7 @@ public class EmpresaBB {
 
 			s = new Screen();
 
-			Pattern imprimirBtn = new Pattern(getClass().getResource("/prints/imprimir.png")).similar(0.3);
+			Pattern imprimirBtn = archiveAdm.getPatternFromJar("/prints/imprimir.png",0.3);
 			Thread.sleep(5000);
 			Match mImprimir = s.wait(imprimirBtn, 10);
 			Location locImprimir = mImprimir.getTarget();
@@ -243,9 +244,7 @@ public class EmpresaBB {
 
 			Thread.sleep(5000);
 
-			ArchiveAdm arquivo = new ArchiveAdm();
-			
-			arquivo.salvarArquivoBB(nomeArquivo, caminhoPastaSalvar, data);
+			archiveAdm.salvarArquivoABC(nomeArquivo, caminhoPastaSalvar, data);
 		
 			
 
@@ -285,7 +284,7 @@ public class EmpresaBB {
 
 			/* Nova captura */
 			s = new Screen();
-			Pattern extratoBtn = new Pattern(getClass().getResource("/prints/extratodacontacorrente.png")).similar(0.6);
+			Pattern extratoBtn = archiveAdm.getPatternFromJar("/prints/extratodacontacorrente.png",0.6);
 
 			/* Encontra e clica */
 			Match mExtrato = s.wait(extratoBtn, 10);
@@ -302,7 +301,7 @@ public class EmpresaBB {
 			}
 
 			s = new Screen();
-			Pattern contaBtn = new Pattern(getClass().getResource("/prints/empresa10/conta1.png")).similar(0.5);
+			Pattern contaBtn = archiveAdm.getPatternFromJar("/prints/empresa10/conta1.png",0.5);
 			Match mConta = s.wait(contaBtn, 10);
 			Location locConta = mConta.getTarget();
 			robot.mouseMove(locConta.getX(), locConta.getY());
@@ -312,7 +311,7 @@ public class EmpresaBB {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern conta2Btn = new Pattern(getClass().getResource("/prints/empresa10/conta2.png")).similar(0.5);
+			Pattern conta2Btn = archiveAdm.getPatternFromJar("/prints/empresa10/conta2.png",0.5);
 			Match mConta2 = s.wait(conta2Btn, 10);
 			Location locConta2 = mConta2.getTarget();
 			robot.mouseMove(locConta2.getX(), locConta2.getY());
@@ -322,7 +321,7 @@ public class EmpresaBB {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern categoriaBtn = new Pattern(getClass().getResource("/prints/linhaTempo.png")).similar(0.5);
+			Pattern categoriaBtn = archiveAdm.getPatternFromJar("/prints/linhaTempo.png",0.5);
 			Match mCategoria = s.wait(categoriaBtn, 10);
 			Location locCategoria = mCategoria.getTarget();
 			robot.mouseMove(locCategoria.getX(), locCategoria.getY());
@@ -332,7 +331,7 @@ public class EmpresaBB {
 			Thread.sleep(2000);
 
 			s = new Screen();
-			Pattern periodoBtn = new Pattern(getClass().getResource("/prints/periodo.png")).similar(0.5);
+			Pattern periodoBtn = archiveAdm.getPatternFromJar("/prints/periodo.png",0.5);
 			Match mPeriodo = s.wait(periodoBtn, 10);
 			Location locPeriodo = mPeriodo.getTarget();
 			robot.mouseMove(locPeriodo.getX(), locPeriodo.getY());
@@ -342,7 +341,7 @@ public class EmpresaBB {
 			Thread.sleep(2000);
 
 			s = new Screen();
-			Pattern inicioBtn = new Pattern(getClass().getResource("/prints/datainicial.png")).similar(0.5);
+			Pattern inicioBtn = archiveAdm.getPatternFromJar("/prints/datainicial.png",0.5);
 			Match mInicio = s.wait(inicioBtn, 10);
 			Location locInicio = mInicio.getTarget();
 			robot.mouseMove(locInicio.getX(), locInicio.getY());
@@ -354,7 +353,7 @@ public class EmpresaBB {
 			s.type(dataParaInieFim);
 
 			s = new Screen();
-			Pattern fimBtn = new Pattern(getClass().getResource("/prints/datafinal.png")).similar(0.5);
+			Pattern fimBtn = archiveAdm.getPatternFromJar("/prints/datafinal.png",0.5);
 			Match mFim = s.wait(fimBtn, 10);
 			Location locFim = mFim.getTarget();
 			robot.mouseMove(locFim.getX(), locFim.getY());
@@ -368,7 +367,7 @@ public class EmpresaBB {
 			/* Nova captura */
 			s = new Screen();
 
-			Pattern okBtn = new Pattern(getClass().getResource("/prints/ok.png")).similar(0.6);
+			Pattern okBtn = archiveAdm.getPatternFromJar("/prints/ok.png",0.6);
 			Match mOk = s.wait(okBtn, 10);
 			Location locOk = mOk.getTarget();
 			robot.mouseMove(locOk.getX(), locOk.getY());
@@ -385,7 +384,7 @@ public class EmpresaBB {
 
 			s = new Screen();
 
-			Pattern imprimirBtn = new Pattern(getClass().getResource("/prints/imprimir.png")).similar(0.3);
+			Pattern imprimirBtn = archiveAdm.getPatternFromJar("/prints/imprimir.png",0.3);
 			Thread.sleep(5000);
 			Match mImprimir = s.wait(imprimirBtn, 10);
 			Location locImprimir = mImprimir.getTarget();
@@ -397,10 +396,8 @@ public class EmpresaBB {
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 
 			Thread.sleep(5000);
-
-			ArchiveAdm arquivo = new ArchiveAdm();
 			
-			arquivo.salvarArquivoBB(nomeArquivo, caminhoPastaSalvar, data);
+			archiveAdm.salvarArquivoBB(nomeArquivo, caminhoPastaSalvar, data);
 			
 			
 

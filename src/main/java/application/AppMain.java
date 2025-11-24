@@ -1,4 +1,4 @@
-package application;
+package main.java.application;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -9,22 +9,44 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import entities.EmpresaABC;
-import entities.EmpresaBB;
-import entities.EmpresaCEF;
-import entities.EmpresaSANTANDER;
-import entities.EmpresaSICREDI;
-import utils.AppLogger;
-import utils.ChromeAdm;
+import main.java.entities.EmpresaABC;
+import main.java.entities.EmpresaBB;
+import main.java.entities.EmpresaCEF;
+import main.java.entities.EmpresaSANTANDER;
+import main.java.entities.EmpresaSICREDI;
+import main.java.utils.AppLogger;
+import main.java.utils.ChromeAdm;
 
 public class AppMain {
 
-	public static String salvaOnde = "C:\\USERS\\SUPORTE07\\DOWNLOADS\\";
-	public static LocalDate data = LocalDate.of(2025, 10, 20);
+	public static String salvaOnde = "Z:\\FINANCEIRO\\3.FINANCEIRO\\Extratos\\Extratos Bancários\\";
+	public static LocalDate data = null;
+
 
 	public static void main(String[] args) {
-		ChromeAdm chromeAdm = new ChromeAdm();
+		
+
+		
+		for (String arg : args) {
+
+	         if (arg.startsWith("--data=")) {
+	             try {
+	                 String valor = arg.substring("--data=".length());
+	                 data = LocalDate.parse(valor); // atribui direto a variável data
+	             } catch (Exception e) {
+	                 System.out.println("Data inválida! Use o formato YYYY-MM-DD");
+	             }
+	         }
+		}
+		
+		
+		
 		System.out.println("Iniciando robo de geração de extratos.");
+		System.out.println();
+	
+		
+		ChromeAdm chromeAdm = new ChromeAdm();
+		
 
 		try {
 
@@ -279,12 +301,12 @@ public class AppMain {
 						data = LocalDate.now().minusDays(1);
 					}
 					empresa.setData(data);
-					empresa.setNomeArquivo("CAIXA ADM ");
+					empresa.setNomeArquivo("CAIXA ADM");
 					empresa.geraExtratoCorrenteADM();
 
-				} else if (extrato.equals("CAIXA VIG ")) {
+				} else if (extrato.equals("CAIXA VIG")) {
 					System.out.println();
-					System.out.println("Iniciando geração do extrato CAIXA VIG ");
+					System.out.println("Iniciando geração do extrato CAIXA VIG");
 
 					EmpresaCEF empresa = appLogger.logarCEF(30, 1);
 					empresa.setCaminhoPastaSalvar(salvaOnde);
@@ -292,33 +314,20 @@ public class AppMain {
 						data = LocalDate.now().minusDays(1);
 					}
 					empresa.setData(data);
-					empresa.setNomeArquivo("CAIXA VIG ");
+					empresa.setNomeArquivo("CAIXA VIG");
 					empresa.geraExtratoCorrenteVIG();
 				}
 
 			}
 
 			chromeAdm.fechaChrome();
+		
+			System.out.println();
+			System.out.println("Execução concluída.");
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		/*
-		 * else if (extrato.equals("CAIXA ADM COBRANCA")) {
-		 * System.out.println("Faltando: CAIXA ADM COBRANCA"); } else if
-		 * (extrato.equals("CAIXA ADM")) { System.out.println("Faltando: CAIXA ADM"); }
-		 * else if (extrato.equals("CAIXA VIG")) {
-		 * System.out.println("Faltando: CAIXA VIG"); } else if
-		 * (extrato.equals("XP ADM 1")) { System.out.println("Faltando: XP ADM 1"); }
-		 * else if (extrato.equals("XP ADM")) { System.out.println("Faltando: XP ADM");
-		 * } else if (extrato.equals("XP CONTINGENCIA")) {
-		 * System.out.println("Faltando: XP CONTINGENCIA"); } else if
-		 * (extrato.equals("XP QUALITY")) { System.out.println("Faltando: XP QUALITY");
-		 * } else if (extrato.equals("XP VIG 1")) {
-		 * System.out.println("Faltando: XP VIG 1"); } else if
-		 * (extrato.equals("XP VIG")) { System.out.println("Faltando: XP VIG"); }
-		 */
 
 	}
 

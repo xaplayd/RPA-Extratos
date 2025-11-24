@@ -20,4 +20,10 @@
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<variableList>
+		<variable>
+			<name>res</name>
+			<value>file:/C:/WS/ROBO.Extratos/src/resources</value>
+		</variable>
+	</variableList>
 </projectDescription>

@@ -3,3 +3,6 @@
 
 # Ignorar imagens PNG
 *.png
+
+#Ignorar TARGET
+*target/

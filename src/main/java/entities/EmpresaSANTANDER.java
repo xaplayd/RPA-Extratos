@@ -1,4 +1,4 @@
-package entities;
+package main.java.entities;
 
 import java.awt.Robot;
 import java.awt.event.InputEvent;
@@ -14,8 +14,8 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
 
-import utils.ArchiveAdm;
-import utils.ChromeAdm;
+import main.java.utils.ArchiveAdm;
+import main.java.utils.ChromeAdm;
 
 public class EmpresaSANTANDER {
 	
@@ -26,6 +26,7 @@ public class EmpresaSANTANDER {
 	private String user;
 	private String pass;
 	ChromeAdm chromeAdm = new ChromeAdm();
+	ArchiveAdm archiveAdm = new ArchiveAdm();
 	private String caminhoPastaSalvar;
 	private String nomeArquivo;
 	private LocalDate data;
@@ -144,7 +145,7 @@ public class EmpresaSANTANDER {
 			Screen s = new Screen();
 			Robot robot = new Robot();
 
-			Pattern opcoesContaBtn = new Pattern(getClass().getResource("/prints/santander/opcoesconta.png")).similar(0.6);
+			Pattern opcoesContaBtn = archiveAdm.getPatternFromJar("/prints/santander/opcoesconta.png",0.6);
 			Match mOpcoesConta = s.wait(opcoesContaBtn, 10);
 			Location locOpcoesConta = mOpcoesConta.getTarget();
 			robot.mouseMove(locOpcoesConta.getX(), locOpcoesConta.getY());
@@ -168,7 +169,7 @@ public class EmpresaSANTANDER {
 			
 			
 			s = new Screen();
-			Pattern consultarBtn = new Pattern(getClass().getResource("/prints/santander/consultar.png")).similar(0.6);
+			Pattern consultarBtn = archiveAdm.getPatternFromJar("/prints/santander/consultar.png",0.6);
 			Match mConsultar = s.wait(consultarBtn, 10);
 			Location locConsultar = mConsultar.getTarget();
 			robot.mouseMove(locConsultar.getX(), locConsultar.getY());
@@ -178,7 +179,7 @@ public class EmpresaSANTANDER {
 			Thread.sleep(3000);
 			
 			s = new Screen();
-			Pattern editaDataBtn = new Pattern(getClass().getResource("/prints/santander/editadata.png")).similar(0.6);
+			Pattern editaDataBtn = archiveAdm.getPatternFromJar("/prints/santander/editadata.png",0.6);
 			Match mEditaData = s.wait(editaDataBtn, 10);
 			Location locEditaData = mEditaData.getTarget();
 			robot.mouseMove(locEditaData.getX(), locEditaData.getY());
@@ -228,7 +229,7 @@ public class EmpresaSANTANDER {
 			
 			
 			s = new Screen();
-			Pattern okBtn = new Pattern(getClass().getResource("/prints/santander/ok.png")).similar(0.6);
+			Pattern okBtn = archiveAdm.getPatternFromJar("/prints/santander/ok.png",0.6);
 			Match mOk = s.wait(okBtn, 10);
 			Location locOk = mOk.getTarget();
 			robot.mouseMove(locOk.getX(), locOk.getY());
@@ -250,7 +251,7 @@ public class EmpresaSANTANDER {
 			s.type(Key.ENTER);
 			
 			s = new Screen();
-			Pattern salvarEmPdfBtn = new Pattern(getClass().getResource("/prints/santander/salvarempdf.png")).similar(0.6);
+			Pattern salvarEmPdfBtn = archiveAdm.getPatternFromJar("/prints/santander/salvarempdf.png",0.6);
 			Match mSalvarEmPdf = s.exists(salvarEmPdfBtn, 10);
 			Location locSalvarEmPdf = mSalvarEmPdf.getTarget();
 				
@@ -262,10 +263,7 @@ public class EmpresaSANTANDER {
 			
 			
 	
-
-			ArchiveAdm arquivo = new ArchiveAdm();
-			
-			arquivo.salvarArquivoSANTANDER(nomeArquivo, caminhoPastaSalvar, data);
+			archiveAdm.salvarArquivoABC(nomeArquivo, caminhoPastaSalvar, data);
 			
 
 		} catch (Exception e) {
@@ -289,7 +287,7 @@ public class EmpresaSANTANDER {
 			s.type("v", KeyModifier.CTRL);
 			
 			s = new Screen();
-			Pattern trocaContaBtn = new Pattern(getClass().getResource("/prints/santander/trocarconta.png")).similar(0.6);
+			Pattern trocaContaBtn = archiveAdm.getPatternFromJar("/prints/santander/trocarconta.png",0.6);
 			Match mTrocaConta = s.wait(trocaContaBtn, 10);
 			Location locTrocaConta = mTrocaConta.getTarget();
 			robot.mouseMove(locTrocaConta.getX(), locTrocaConta.getY());
@@ -299,7 +297,7 @@ public class EmpresaSANTANDER {
 			Thread.sleep(3000);
 			
 			s = new Screen();
-			Pattern contaQualityBtn = new Pattern(getClass().getResource("/prints/santander/contaquality.png")).similar(0.6);
+			Pattern contaQualityBtn = archiveAdm.getPatternFromJar("/prints/santander/contaquality.png",0.6);
 			Match mContaQuality = s.wait(contaQualityBtn, 10);
 			Location locContaQuality = mContaQuality.getTarget();
 			robot.mouseMove(locContaQuality.getX(), locContaQuality.getY());
@@ -320,7 +318,7 @@ public class EmpresaSANTANDER {
 			Thread.sleep(5000);
 			
 			s = new Screen();
-			Pattern okEntendiBtn = new Pattern(getClass().getResource("/prints/santander/okentendi.png")).similar(0.6);
+			Pattern okEntendiBtn = archiveAdm.getPatternFromJar("/prints/santander/okentendi.png",0.6);
 			Match mOkEntendi = s.exists(okEntendiBtn, 10);
 			Location locOkEntendi;
 			if(mOkEntendi != null) {
@@ -333,7 +331,7 @@ public class EmpresaSANTANDER {
 			}
 			
 
-			Pattern opcoesContaBtn = new Pattern(getClass().getResource("/prints/santander/opcoesconta.png")).similar(0.6);
+			Pattern opcoesContaBtn = archiveAdm.getPatternFromJar("/prints/santander/opcoesconta.png",0.6);
 			Match mOpcoesConta = s.wait(opcoesContaBtn, 10);
 			Location locOpcoesConta = mOpcoesConta.getTarget();
 			robot.mouseMove(locOpcoesConta.getX(), locOpcoesConta.getY());
@@ -357,7 +355,7 @@ public class EmpresaSANTANDER {
 			
 			
 			s = new Screen();
-			Pattern consultarBtn = new Pattern(getClass().getResource("/prints/santander/consultar.png")).similar(0.6);
+			Pattern consultarBtn = archiveAdm.getPatternFromJar("/prints/santander/consultar.png",0.6);
 			Match mConsultar = s.wait(consultarBtn, 10);
 			Location locConsultar = mConsultar.getTarget();
 			robot.mouseMove(locConsultar.getX(), locConsultar.getY());
@@ -367,7 +365,7 @@ public class EmpresaSANTANDER {
 			Thread.sleep(3000);
 			
 			s = new Screen();
-			Pattern editaDataBtn = new Pattern(getClass().getResource("/prints/santander/editadata.png")).similar(0.6);
+			Pattern editaDataBtn = archiveAdm.getPatternFromJar("/prints/santander/editadata.png",0.6);
 			Match mEditaData = s.wait(editaDataBtn, 10);
 			Location locEditaData = mEditaData.getTarget();
 			robot.mouseMove(locEditaData.getX(), locEditaData.getY());
@@ -417,7 +415,7 @@ public class EmpresaSANTANDER {
 			
 			
 			s = new Screen();
-			Pattern okBtn = new Pattern(getClass().getResource("/prints/santander/ok.png")).similar(0.6);
+			Pattern okBtn =archiveAdm.getPatternFromJar("/prints/santander/ok.png",0.6);
 			Match mOk = s.wait(okBtn, 10);
 			Location locOk = mOk.getTarget();
 			robot.mouseMove(locOk.getX(), locOk.getY());
@@ -439,7 +437,7 @@ public class EmpresaSANTANDER {
 			s.type(Key.ENTER);
 			
 			s = new Screen();
-			Pattern salvarEmPdfBtn = new Pattern(getClass().getResource("/prints/santander/salvarempdf.png")).similar(0.6);
+			Pattern salvarEmPdfBtn = archiveAdm.getPatternFromJar("/prints/santander/salvarempdf.png",0.6);
 			Match mSalvarEmPdf = s.exists(salvarEmPdfBtn, 10);
 			Location locSalvarEmPdf = mSalvarEmPdf.getTarget();
 				
@@ -450,11 +448,7 @@ public class EmpresaSANTANDER {
 			Thread.sleep(3000);
 			
 			
-	
-
-			ArchiveAdm arquivo = new ArchiveAdm();
-			
-			arquivo.salvarArquivoSANTANDER(nomeArquivo, caminhoPastaSalvar, data);
+			archiveAdm.salvarArquivoABC(nomeArquivo, caminhoPastaSalvar, data);
 			
 
 		} catch (Exception e) {
@@ -478,7 +472,7 @@ public class EmpresaSANTANDER {
 			s.type("v", KeyModifier.CTRL);
 			
 			s = new Screen();
-			Pattern trocaContaBtn = new Pattern(getClass().getResource("/prints/santander/trocarconta.png")).similar(0.6);
+			Pattern trocaContaBtn = archiveAdm.getPatternFromJar("/prints/santander/trocarconta.png",0.6);
 			Match mTrocaConta = s.wait(trocaContaBtn, 10);
 			Location locTrocaConta = mTrocaConta.getTarget();
 			robot.mouseMove(locTrocaConta.getX(), locTrocaConta.getY());
@@ -488,7 +482,7 @@ public class EmpresaSANTANDER {
 			Thread.sleep(3000);
 			
 			s = new Screen();
-			Pattern contaQualityBtn = new Pattern(getClass().getResource("/prints/santander/contavig.png")).similar(0.6);
+			Pattern contaQualityBtn = archiveAdm.getPatternFromJar("/prints/santander/contavig.png",0.6);
 			Match mContaQuality = s.wait(contaQualityBtn, 10);
 			Location locContaQuality = mContaQuality.getTarget();
 			robot.mouseMove(locContaQuality.getX(), locContaQuality.getY());
@@ -509,7 +503,7 @@ public class EmpresaSANTANDER {
 			s.type("v", KeyModifier.CTRL);
 			
 			s = new Screen();
-			Pattern okEntendiBtn = new Pattern(getClass().getResource("/prints/santander/okentendi.png")).similar(0.6);
+			Pattern okEntendiBtn = archiveAdm.getPatternFromJar("/prints/santander/okentendi.png",0.6);
 			Match mOkEntendi = s.exists(okEntendiBtn, 10);
 			Location locOkEntendi;
 			Thread.sleep(5000);
@@ -525,7 +519,7 @@ public class EmpresaSANTANDER {
 			Thread.sleep(7000);
 			
 			s = new Screen();
-			Pattern opcoesContaBtn = new Pattern(getClass().getResource("/prints/santander/opcoesconta.png")).similar(0.6);
+			Pattern opcoesContaBtn = archiveAdm.getPatternFromJar("/prints/santander/opcoesconta.png",0.6);
 			Match mOpcoesConta = s.wait(opcoesContaBtn, 10);
 			Location locOpcoesConta = mOpcoesConta.getTarget();
 			robot.mouseMove(locOpcoesConta.getX(), locOpcoesConta.getY());
@@ -549,7 +543,7 @@ public class EmpresaSANTANDER {
 			
 			
 			s = new Screen();
-			Pattern consultarBtn = new Pattern(getClass().getResource("/prints/santander/consultar.png")).similar(0.6);
+			Pattern consultarBtn = archiveAdm.getPatternFromJar("/prints/santander/consultar.png",0.6);
 			Match mConsultar = s.wait(consultarBtn, 10);
 			Location locConsultar = mConsultar.getTarget();
 			robot.mouseMove(locConsultar.getX(), locConsultar.getY());
@@ -559,7 +553,7 @@ public class EmpresaSANTANDER {
 			Thread.sleep(3000);
 			
 			s = new Screen();
-			Pattern editaDataBtn = new Pattern(getClass().getResource("/prints/santander/editadata.png")).similar(0.6);
+			Pattern editaDataBtn = archiveAdm.getPatternFromJar("/prints/santander/editadata.png",0.6);
 			Match mEditaData = s.wait(editaDataBtn, 10);
 			Location locEditaData = mEditaData.getTarget();
 			robot.mouseMove(locEditaData.getX(), locEditaData.getY());
@@ -609,7 +603,7 @@ public class EmpresaSANTANDER {
 			
 			
 			s = new Screen();
-			Pattern okBtn = new Pattern(getClass().getResource("/prints/santander/ok.png")).similar(0.6);
+			Pattern okBtn = archiveAdm.getPatternFromJar("/prints/santander/ok.png",0.6);
 			Match mOk = s.wait(okBtn, 10);
 			Location locOk = mOk.getTarget();
 			robot.mouseMove(locOk.getX(), locOk.getY());
@@ -631,7 +625,7 @@ public class EmpresaSANTANDER {
 			s.type(Key.ENTER);
 			
 			s = new Screen();
-			Pattern salvarEmPdfBtn = new Pattern(getClass().getResource("/prints/santander/salvarempdf.png")).similar(0.6);
+			Pattern salvarEmPdfBtn = archiveAdm.getPatternFromJar("/prints/santander/salvarempdf.png",0.6);
 			Match mSalvarEmPdf = s.exists(salvarEmPdfBtn, 10);
 			Location locSalvarEmPdf = mSalvarEmPdf.getTarget();
 				
@@ -642,11 +636,8 @@ public class EmpresaSANTANDER {
 			Thread.sleep(3000);
 			
 			
-	
-
-			ArchiveAdm arquivo = new ArchiveAdm();
 			
-			arquivo.salvarArquivoSANTANDER(nomeArquivo, caminhoPastaSalvar, data);
+			archiveAdm.salvarArquivoSANTANDER(nomeArquivo, caminhoPastaSalvar, data);
 			
 
 		} catch (Exception e) {

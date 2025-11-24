@@ -1,4 +1,4 @@
-package utils;
+package main.java.utils;
 
 import org.sikuli.script.Location;
 import org.sikuli.script.Match;
@@ -77,8 +77,10 @@ public class ChromeAdm {
 
 	public boolean confirmaChegadaNaTela(String caminhoTela) {
 		try {
+			ArchiveAdm archiveAdm = new ArchiveAdm();
+
 			Screen s = new Screen();
-			Pattern tela = new Pattern(getClass().getResource(caminhoTela)).similar(0.8);
+			Pattern tela = archiveAdm.getPatternFromJar(caminhoTela,0.8);
 
 			Match mTela = s.wait(tela, 10);
 			Location locTela = mTela.getTarget();

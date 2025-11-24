@@ -1,4 +1,4 @@
-package entities;
+package main.java.entities;
 
 import java.awt.Robot;
 import java.awt.event.InputEvent;
@@ -14,8 +14,8 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
 
-import utils.ArchiveAdm;
-import utils.ChromeAdm;
+import main.java.utils.ArchiveAdm;
+import main.java.utils.ChromeAdm;
 
 public class EmpresaCEF {
 
@@ -24,6 +24,7 @@ public class EmpresaCEF {
 	private String user;
 	private String pass;
 	ChromeAdm chromeAdm = new ChromeAdm();
+	ArchiveAdm archiveAdm = new ArchiveAdm();
 	private String caminhoPastaSalvar;
 	private String nomeArquivo;
 	private LocalDate data;
@@ -126,8 +127,7 @@ public class EmpresaCEF {
 			Thread.sleep(5000);
 
 			s = new Screen();
-			Pattern saldoEExtratoBtn = new Pattern(getClass().getResource("/prints/cef/saldoseextrato.png"))
-					.similar(0.6);
+			Pattern saldoEExtratoBtn = archiveAdm.getPatternFromJar("/prints/cef/saldoseextrato.png",0.6);
 			Match mSaldoEExtrato = s.wait(saldoEExtratoBtn, 10);
 			Location locSaldoEExtrato = mSaldoEExtrato.getTarget();
 			robot.mouseMove(locSaldoEExtrato.getX(), locSaldoEExtrato.getY());
@@ -146,8 +146,7 @@ public class EmpresaCEF {
 			s.type("v", KeyModifier.CTRL);
 
 			s = new Screen();
-			Pattern contaPorPeriodoBtn = new Pattern(getClass().getResource("/prints/cef/contaporperiodo.png"))
-					.similar(0.6);
+			Pattern contaPorPeriodoBtn = archiveAdm.getPatternFromJar("/prints/cef/contaporperiodo.png",0.6);
 			Match mContaPorPeriodo = s.wait(contaPorPeriodoBtn, 10);
 			Location locContaPorPeriodo = mContaPorPeriodo.getTarget();
 			robot.mouseMove(locContaPorPeriodo.getX(), locContaPorPeriodo.getY());
@@ -172,7 +171,7 @@ public class EmpresaCEF {
 				Thread.sleep(1000);
 
 				s = new Screen();
-				Pattern outroMesBtn = new Pattern(getClass().getResource("/prints/cef/outromes.png")).similar(0.6);
+				Pattern outroMesBtn = archiveAdm.getPatternFromJar("/prints/cef/outromes.png",0.6);
 				Match mOutroMes = s.wait(outroMesBtn, 10);
 				Location locOutroMes = mOutroMes.getTarget();
 				robot.mouseMove(locOutroMes.getX(), locOutroMes.getY());
@@ -182,7 +181,7 @@ public class EmpresaCEF {
 				Thread.sleep(3000);
 				
 				s = new Screen();
-				Pattern escolhaOMesBtn = new Pattern(getClass().getResource("/prints/cef/escolhaomes.png")).similar(0.6);
+				Pattern escolhaOMesBtn = archiveAdm.getPatternFromJar("/prints/cef/escolhaomes.png",0.6);
 				Match mEscolhaOMes = s.wait(escolhaOMesBtn, 10);
 				Location locEscolhaOMes = mEscolhaOMes.getTarget();
 				robot.mouseMove(locEscolhaOMes.getX(), locEscolhaOMes.getY());
@@ -263,7 +262,7 @@ public class EmpresaCEF {
 			Thread.sleep(5000);
 
 			s = new Screen();
-			Pattern diaAteBtn = new Pattern(getClass().getResource("/prints/cef/diaate.png")).similar(0.6);
+			Pattern diaAteBtn = archiveAdm.getPatternFromJar("/prints/cef/diaate.png",0.6);
 			Match mDiaAte = s.wait(diaAteBtn, 10);
 			Location locDiaAte = mDiaAte.getTarget();
 			robot.mouseMove(locDiaAte.getX(), locDiaAte.getY());
@@ -291,7 +290,7 @@ public class EmpresaCEF {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern continuarBtn = new Pattern(getClass().getResource("/prints/cef/continuar.png")).similar(0.6);
+			Pattern continuarBtn = archiveAdm.getPatternFromJar("/prints/cef/continuar.png",0.6);
 			Match mContinuar = s.wait(continuarBtn, 10);
 			Location locContinuar = mContinuar.getTarget();
 			robot.mouseMove(locContinuar.getX(), locContinuar.getY());
@@ -312,7 +311,7 @@ public class EmpresaCEF {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern imprimirBtn = new Pattern(getClass().getResource("/prints/cef/imprimir.png")).similar(0.6);
+			Pattern imprimirBtn = archiveAdm.getPatternFromJar("/prints/cef/imprimir.png",0.6);
 			Match mImprimir = s.wait(imprimirBtn, 10);
 			Location locImprimir = mImprimir.getTarget();
 			robot.mouseMove(locImprimir.getX(), locImprimir.getY());
@@ -321,9 +320,7 @@ public class EmpresaCEF {
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			Thread.sleep(3000);
 
-			ArchiveAdm arquivo = new ArchiveAdm();
-
-			arquivo.salvarArquivoCEF(nomeArquivo, caminhoPastaSalvar, data);
+			archiveAdm.salvarArquivoABC(nomeArquivo, caminhoPastaSalvar, data);
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -339,8 +336,7 @@ public class EmpresaCEF {
 			Thread.sleep(5000);
 
 			s = new Screen();
-			Pattern clicaContaAdmBtn = new Pattern(getClass().getResource("/prints/cef/clicacontaadm.png"))
-					.similar(0.6);
+			Pattern clicaContaAdmBtn = archiveAdm.getPatternFromJar("/prints/cef/clicacontaadm.png",0.6);
 			Match mClicaContaAdm = s.wait(clicaContaAdmBtn, 10);
 			Location locClicaContaAdm = mClicaContaAdm.getTarget();
 			robot.mouseMove(locClicaContaAdm.getX(), locClicaContaAdm.getY());
@@ -361,8 +357,7 @@ public class EmpresaCEF {
 			Thread.sleep(5000);
 
 			s = new Screen();
-			Pattern contaGarantidaBtn = new Pattern(getClass().getResource("/prints/cef/contagarantidaadm.png"))
-					.similar(0.6);
+			Pattern contaGarantidaBtn = archiveAdm.getPatternFromJar("/prints/cef/contagarantidaadm.png",0.6);
 			Match mContaGarantida = s.wait(contaGarantidaBtn, 10);
 			Location locContaGarantida = mContaGarantida.getTarget();
 			robot.mouseMove(locContaGarantida.getX(), locContaGarantida.getY());
@@ -372,8 +367,7 @@ public class EmpresaCEF {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern saldoEExtratoBtn = new Pattern(getClass().getResource("/prints/cef/saldoseextrato.png"))
-					.similar(0.6);
+			Pattern saldoEExtratoBtn = archiveAdm.getPatternFromJar("/prints/cef/saldoseextrato.png",0.6);
 			Match mSaldoEExtrato = s.wait(saldoEExtratoBtn, 10);
 			Location locSaldoEExtrato = mSaldoEExtrato.getTarget();
 			robot.mouseMove(locSaldoEExtrato.getX(), locSaldoEExtrato.getY());
@@ -392,8 +386,7 @@ public class EmpresaCEF {
 			s.type("v", KeyModifier.CTRL);
 
 			s = new Screen();
-			Pattern contaPorPeriodoBtn = new Pattern(getClass().getResource("/prints/cef/contaporperiodo.png"))
-					.similar(0.6);
+			Pattern contaPorPeriodoBtn = archiveAdm.getPatternFromJar("/prints/cef/contaporperiodo.png",0.6);
 			Match mContaPorPeriodo = s.wait(contaPorPeriodoBtn, 10);
 			Location locContaPorPeriodo = mContaPorPeriodo.getTarget();
 			robot.mouseMove(locContaPorPeriodo.getX(), locContaPorPeriodo.getY());
@@ -419,7 +412,7 @@ public class EmpresaCEF {
 				Thread.sleep(1000);
 
 				s = new Screen();
-				Pattern outroMesBtn = new Pattern(getClass().getResource("/prints/cef/outromes.png")).similar(0.6);
+				Pattern outroMesBtn = archiveAdm.getPatternFromJar("/prints/cef/outromes.png",0.6);
 				Match mOutroMes = s.wait(outroMesBtn, 10);
 				Location locOutroMes = mOutroMes.getTarget();
 				robot.mouseMove(locOutroMes.getX(), locOutroMes.getY());
@@ -429,7 +422,7 @@ public class EmpresaCEF {
 				Thread.sleep(3000);
 				
 				s = new Screen();
-				Pattern escolhaOMesBtn = new Pattern(getClass().getResource("/prints/cef/escolhaomes.png")).similar(0.6);
+				Pattern escolhaOMesBtn = archiveAdm.getPatternFromJar("/prints/cef/escolhaomes.png",0.6);
 				Match mEscolhaOMes = s.wait(escolhaOMesBtn, 10);
 				Location locEscolhaOMes = mEscolhaOMes.getTarget();
 				robot.mouseMove(locEscolhaOMes.getX(), locEscolhaOMes.getY());
@@ -510,7 +503,7 @@ public class EmpresaCEF {
 			Thread.sleep(5000);
 
 			s = new Screen();
-			Pattern diaAteBtn = new Pattern(getClass().getResource("/prints/cef/diaate.png")).similar(0.6);
+			Pattern diaAteBtn = archiveAdm.getPatternFromJar("/prints/cef/diaate.png",0.6);
 			Match mDiaAte = s.wait(diaAteBtn, 10);
 			Location locDiaAte = mDiaAte.getTarget();
 			robot.mouseMove(locDiaAte.getX(), locDiaAte.getY());
@@ -538,7 +531,7 @@ public class EmpresaCEF {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern continuarBtn = new Pattern(getClass().getResource("/prints/cef/continuar.png")).similar(0.6);
+			Pattern continuarBtn = archiveAdm.getPatternFromJar("/prints/cef/continuar.png",0.6);
 			Match mContinuar = s.wait(continuarBtn, 10);
 			Location locContinuar = mContinuar.getTarget();
 			robot.mouseMove(locContinuar.getX(), locContinuar.getY());
@@ -559,7 +552,7 @@ public class EmpresaCEF {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern imprimirBtn = new Pattern(getClass().getResource("/prints/cef/imprimir.png")).similar(0.6);
+			Pattern imprimirBtn = archiveAdm.getPatternFromJar("/prints/cef/imprimir.png",0.6);
 			Match mImprimir = s.wait(imprimirBtn, 10);
 			Location locImprimir = mImprimir.getTarget();
 			robot.mouseMove(locImprimir.getX(), locImprimir.getY());
@@ -568,9 +561,7 @@ public class EmpresaCEF {
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			Thread.sleep(3000);
 
-			ArchiveAdm arquivo = new ArchiveAdm();
-
-			arquivo.salvarArquivoCEF(nomeArquivo, caminhoPastaSalvar, data);
+			archiveAdm.salvarArquivoABC(nomeArquivo, caminhoPastaSalvar, data);
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -586,8 +577,7 @@ public class EmpresaCEF {
 			Thread.sleep(5000);
 
 			s = new Screen();
-			Pattern clicaContaAdmBtn = new Pattern(getClass().getResource("/prints/cef/clicacontavig.png"))
-					.similar(0.6);
+			Pattern clicaContaAdmBtn = archiveAdm.getPatternFromJar("/prints/cef/clicacontavig.png",0.6);
 			Match mClicaContaAdm = s.wait(clicaContaAdmBtn, 10);
 			Location locClicaContaAdm = mClicaContaAdm.getTarget();
 			robot.mouseMove(locClicaContaAdm.getX(), locClicaContaAdm.getY());
@@ -608,8 +598,7 @@ public class EmpresaCEF {
 			Thread.sleep(5000);
 
 			s = new Screen();
-			Pattern contaGarantidaBtn = new Pattern(getClass().getResource("/prints/cef/contagarantidavig.png"))
-					.similar(0.6);
+			Pattern contaGarantidaBtn = archiveAdm.getPatternFromJar("/prints/cef/contagarantidavig.png",0.6);
 			Match mContaGarantida = s.wait(contaGarantidaBtn, 10);
 			Location locContaGarantida = mContaGarantida.getTarget();
 			robot.mouseMove(locContaGarantida.getX(), locContaGarantida.getY());
@@ -619,8 +608,7 @@ public class EmpresaCEF {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern saldoEExtratoBtn = new Pattern(getClass().getResource("/prints/cef/saldoseextrato.png"))
-					.similar(0.6);
+			Pattern saldoEExtratoBtn = archiveAdm.getPatternFromJar("/prints/cef/saldoseextrato.png",0.6);
 			Match mSaldoEExtrato = s.wait(saldoEExtratoBtn, 10);
 			Location locSaldoEExtrato = mSaldoEExtrato.getTarget();
 			robot.mouseMove(locSaldoEExtrato.getX(), locSaldoEExtrato.getY());
@@ -639,8 +627,7 @@ public class EmpresaCEF {
 			s.type("v", KeyModifier.CTRL);
 
 			s = new Screen();
-			Pattern contaPorPeriodoBtn = new Pattern(getClass().getResource("/prints/cef/contaporperiodo.png"))
-					.similar(0.6);
+			Pattern contaPorPeriodoBtn = archiveAdm.getPatternFromJar("/prints/cef/contaporperiodo.png",0.6);
 			Match mContaPorPeriodo = s.wait(contaPorPeriodoBtn, 10);
 			Location locContaPorPeriodo = mContaPorPeriodo.getTarget();
 			robot.mouseMove(locContaPorPeriodo.getX(), locContaPorPeriodo.getY());
@@ -665,7 +652,7 @@ public class EmpresaCEF {
 				Thread.sleep(1000);
 
 				s = new Screen();
-				Pattern outroMesBtn = new Pattern(getClass().getResource("/prints/cef/outromes.png")).similar(0.6);
+				Pattern outroMesBtn = archiveAdm.getPatternFromJar("/prints/cef/outromes.png",0.6);
 				Match mOutroMes = s.wait(outroMesBtn, 10);
 				Location locOutroMes = mOutroMes.getTarget();
 				robot.mouseMove(locOutroMes.getX(), locOutroMes.getY());
@@ -675,7 +662,7 @@ public class EmpresaCEF {
 				Thread.sleep(3000);
 				
 				s = new Screen();
-				Pattern escolhaOMesBtn = new Pattern(getClass().getResource("/prints/cef/escolhaomes.png")).similar(0.6);
+				Pattern escolhaOMesBtn = archiveAdm.getPatternFromJar("/prints/cef/escolhaomes.png",0.6);
 				Match mEscolhaOMes = s.wait(escolhaOMesBtn, 10);
 				Location locEscolhaOMes = mEscolhaOMes.getTarget();
 				robot.mouseMove(locEscolhaOMes.getX(), locEscolhaOMes.getY());
@@ -756,7 +743,7 @@ public class EmpresaCEF {
 			Thread.sleep(5000);
 
 			s = new Screen();
-			Pattern diaAteBtn = new Pattern(getClass().getResource("/prints/cef/diaate.png")).similar(0.6);
+			Pattern diaAteBtn = archiveAdm.getPatternFromJar("/prints/cef/diaate.png",0.6);
 			Match mDiaAte = s.wait(diaAteBtn, 10);
 			Location locDiaAte = mDiaAte.getTarget();
 			robot.mouseMove(locDiaAte.getX(), locDiaAte.getY());
@@ -784,7 +771,7 @@ public class EmpresaCEF {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern continuarBtn = new Pattern(getClass().getResource("/prints/cef/continuar.png")).similar(0.6);
+			Pattern continuarBtn = archiveAdm.getPatternFromJar("/prints/cef/continuar.png",0.6);
 			Match mContinuar = s.wait(continuarBtn, 10);
 			Location locContinuar = mContinuar.getTarget();
 			robot.mouseMove(locContinuar.getX(), locContinuar.getY());
@@ -805,7 +792,7 @@ public class EmpresaCEF {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern imprimirBtn = new Pattern(getClass().getResource("/prints/cef/imprimir.png")).similar(0.6);
+			Pattern imprimirBtn = archiveAdm.getPatternFromJar("/prints/cef/imprimir.png",0.6);
 			Match mImprimir = s.wait(imprimirBtn, 10);
 			Location locImprimir = mImprimir.getTarget();
 			robot.mouseMove(locImprimir.getX(), locImprimir.getY());
@@ -814,9 +801,7 @@ public class EmpresaCEF {
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			Thread.sleep(3000);
 
-			ArchiveAdm arquivo = new ArchiveAdm();
-
-			arquivo.salvarArquivoCEF(nomeArquivo, caminhoPastaSalvar, data);
+			archiveAdm.salvarArquivoABC(nomeArquivo, caminhoPastaSalvar, data);
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -832,8 +817,7 @@ public class EmpresaCEF {
 			Thread.sleep(5000);
 
 			s = new Screen();
-			Pattern clicaContaAdmBtn = new Pattern(getClass().getResource("/prints/cef/clicacontavig.png"))
-					.similar(0.6);
+			Pattern clicaContaAdmBtn = archiveAdm.getPatternFromJar("/prints/cef/clicacontavig.png",0.6);
 			Match mClicaContaAdm = s.wait(clicaContaAdmBtn, 10);
 			Location locClicaContaAdm = mClicaContaAdm.getTarget();
 			robot.mouseMove(locClicaContaAdm.getX(), locClicaContaAdm.getY());
@@ -854,8 +838,7 @@ public class EmpresaCEF {
 			Thread.sleep(5000);
 
 			s = new Screen();
-			Pattern contaGarantidaBtn = new Pattern(getClass().getResource("/prints/cef/contacorrentevig.png"))
-					.similar(0.6);
+			Pattern contaGarantidaBtn = archiveAdm.getPatternFromJar("/prints/cef/contacorrentevig.png",0.6);
 			Match mContaGarantida = s.wait(contaGarantidaBtn, 10);
 			Location locContaGarantida = mContaGarantida.getTarget();
 			robot.mouseMove(locContaGarantida.getX(), locContaGarantida.getY());
@@ -865,8 +848,7 @@ public class EmpresaCEF {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern saldoEExtratoBtn = new Pattern(getClass().getResource("/prints/cef/saldoseextrato.png"))
-					.similar(0.6);
+			Pattern saldoEExtratoBtn = archiveAdm.getPatternFromJar("/prints/cef/saldoseextrato.png",0.6);
 			Match mSaldoEExtrato = s.wait(saldoEExtratoBtn, 10);
 			Location locSaldoEExtrato = mSaldoEExtrato.getTarget();
 			robot.mouseMove(locSaldoEExtrato.getX(), locSaldoEExtrato.getY());
@@ -885,8 +867,7 @@ public class EmpresaCEF {
 			s.type("v", KeyModifier.CTRL);
 
 			s = new Screen();
-			Pattern contaPorPeriodoBtn = new Pattern(getClass().getResource("/prints/cef/contaporperiodo.png"))
-					.similar(0.6);
+			Pattern contaPorPeriodoBtn = archiveAdm.getPatternFromJar("/prints/cef/contaporperiodo.png",0.6);
 			Match mContaPorPeriodo = s.wait(contaPorPeriodoBtn, 10);
 			Location locContaPorPeriodo = mContaPorPeriodo.getTarget();
 			robot.mouseMove(locContaPorPeriodo.getX(), locContaPorPeriodo.getY());
@@ -912,7 +893,7 @@ public class EmpresaCEF {
 				Thread.sleep(1000);
 
 				s = new Screen();
-				Pattern outroMesBtn = new Pattern(getClass().getResource("/prints/cef/outromes.png")).similar(0.6);
+				Pattern outroMesBtn = archiveAdm.getPatternFromJar("/prints/cef/outromes.png",0.6);
 				Match mOutroMes = s.wait(outroMesBtn, 10);
 				Location locOutroMes = mOutroMes.getTarget();
 				robot.mouseMove(locOutroMes.getX(), locOutroMes.getY());
@@ -922,7 +903,7 @@ public class EmpresaCEF {
 				Thread.sleep(3000);
 				
 				s = new Screen();
-				Pattern escolhaOMesBtn = new Pattern(getClass().getResource("/prints/cef/escolhaomes.png")).similar(0.6);
+				Pattern escolhaOMesBtn = archiveAdm.getPatternFromJar("/prints/cef/escolhaomes.png",0.6);
 				Match mEscolhaOMes = s.wait(escolhaOMesBtn, 10);
 				Location locEscolhaOMes = mEscolhaOMes.getTarget();
 				robot.mouseMove(locEscolhaOMes.getX(), locEscolhaOMes.getY());
@@ -1003,7 +984,7 @@ public class EmpresaCEF {
 			Thread.sleep(5000);
 
 			s = new Screen();
-			Pattern diaAteBtn = new Pattern(getClass().getResource("/prints/cef/diaate.png")).similar(0.6);
+			Pattern diaAteBtn = archiveAdm.getPatternFromJar("/prints/cef/diaate.png",0.6);
 			Match mDiaAte = s.wait(diaAteBtn, 10);
 			Location locDiaAte = mDiaAte.getTarget();
 			robot.mouseMove(locDiaAte.getX(), locDiaAte.getY());
@@ -1031,7 +1012,7 @@ public class EmpresaCEF {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern continuarBtn = new Pattern(getClass().getResource("/prints/cef/continuar.png")).similar(0.6);
+			Pattern continuarBtn = archiveAdm.getPatternFromJar("/prints/cef/continuar.png",0.6);
 			Match mContinuar = s.wait(continuarBtn, 10);
 			Location locContinuar = mContinuar.getTarget();
 			robot.mouseMove(locContinuar.getX(), locContinuar.getY());
@@ -1052,7 +1033,7 @@ public class EmpresaCEF {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern imprimirBtn = new Pattern(getClass().getResource("/prints/cef/imprimir.png")).similar(0.6);
+			Pattern imprimirBtn = archiveAdm.getPatternFromJar("/prints/cef/imprimir.png",0.6);
 			Match mImprimir = s.wait(imprimirBtn, 10);
 			Location locImprimir = mImprimir.getTarget();
 			robot.mouseMove(locImprimir.getX(), locImprimir.getY());
@@ -1061,9 +1042,7 @@ public class EmpresaCEF {
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			Thread.sleep(3000);
 
-			ArchiveAdm arquivo = new ArchiveAdm();
-
-			arquivo.salvarArquivoCEF(nomeArquivo, caminhoPastaSalvar, data);
+			archiveAdm.salvarArquivoABC(nomeArquivo, caminhoPastaSalvar, data);
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -1079,8 +1058,7 @@ public class EmpresaCEF {
 			Thread.sleep(5000);
 
 			s = new Screen();
-			Pattern clicaContaAdmBtn = new Pattern(getClass().getResource("/prints/cef/clicacontavig.png"))
-					.similar(0.6);
+			Pattern clicaContaAdmBtn = archiveAdm.getPatternFromJar("/prints/cef/clicacontavig.png",0.6);
 			Match mClicaContaAdm = s.wait(clicaContaAdmBtn, 10);
 			Location locClicaContaAdm = mClicaContaAdm.getTarget();
 			robot.mouseMove(locClicaContaAdm.getX(), locClicaContaAdm.getY());
@@ -1101,8 +1079,7 @@ public class EmpresaCEF {
 			Thread.sleep(5000);
 
 			s = new Screen();
-			Pattern contaGarantidaBtn = new Pattern(getClass().getResource("/prints/cef/contacorrenteadm.png"))
-					.similar(0.6);
+			Pattern contaGarantidaBtn = archiveAdm.getPatternFromJar("/prints/cef/contacorrenteadm.png",0.6);
 			Match mContaGarantida = s.wait(contaGarantidaBtn, 10);
 			Location locContaGarantida = mContaGarantida.getTarget();
 			robot.mouseMove(locContaGarantida.getX(), locContaGarantida.getY());
@@ -1112,8 +1089,7 @@ public class EmpresaCEF {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern saldoEExtratoBtn = new Pattern(getClass().getResource("/prints/cef/saldoseextrato.png"))
-					.similar(0.6);
+			Pattern saldoEExtratoBtn = archiveAdm.getPatternFromJar("/prints/cef/saldoseextrato.png",0.6);
 			Match mSaldoEExtrato = s.wait(saldoEExtratoBtn, 10);
 			Location locSaldoEExtrato = mSaldoEExtrato.getTarget();
 			robot.mouseMove(locSaldoEExtrato.getX(), locSaldoEExtrato.getY());
@@ -1132,8 +1108,7 @@ public class EmpresaCEF {
 			s.type("v", KeyModifier.CTRL);
 
 			s = new Screen();
-			Pattern contaPorPeriodoBtn = new Pattern(getClass().getResource("/prints/cef/contaporperiodo.png"))
-					.similar(0.6);
+			Pattern contaPorPeriodoBtn = archiveAdm.getPatternFromJar("/prints/cef/contaporperiodo.png",0.6);
 			Match mContaPorPeriodo = s.wait(contaPorPeriodoBtn, 10);
 			Location locContaPorPeriodo = mContaPorPeriodo.getTarget();
 			robot.mouseMove(locContaPorPeriodo.getX(), locContaPorPeriodo.getY());
@@ -1158,7 +1133,7 @@ public class EmpresaCEF {
 				Thread.sleep(1000);
 
 				s = new Screen();
-				Pattern outroMesBtn = new Pattern(getClass().getResource("/prints/cef/outromes.png")).similar(0.6);
+				Pattern outroMesBtn = archiveAdm.getPatternFromJar("/prints/cef/outromes.png",0.6);
 				Match mOutroMes = s.wait(outroMesBtn, 10);
 				Location locOutroMes = mOutroMes.getTarget();
 				robot.mouseMove(locOutroMes.getX(), locOutroMes.getY());
@@ -1168,7 +1143,7 @@ public class EmpresaCEF {
 				Thread.sleep(3000);
 				
 				s = new Screen();
-				Pattern escolhaOMesBtn = new Pattern(getClass().getResource("/prints/cef/escolhaomes.png")).similar(0.6);
+				Pattern escolhaOMesBtn = archiveAdm.getPatternFromJar("/prints/cef/escolhaomes.png",0.6);
 				Match mEscolhaOMes = s.wait(escolhaOMesBtn, 10);
 				Location locEscolhaOMes = mEscolhaOMes.getTarget();
 				robot.mouseMove(locEscolhaOMes.getX(), locEscolhaOMes.getY());
@@ -1250,7 +1225,7 @@ public class EmpresaCEF {
 			Thread.sleep(5000);
 
 			s = new Screen();
-			Pattern diaAteBtn = new Pattern(getClass().getResource("/prints/cef/diaate.png")).similar(0.6);
+			Pattern diaAteBtn = archiveAdm.getPatternFromJar("/prints/cef/diaate.png",0.6);
 			Match mDiaAte = s.wait(diaAteBtn, 10);
 			Location locDiaAte = mDiaAte.getTarget();
 			robot.mouseMove(locDiaAte.getX(), locDiaAte.getY());
@@ -1278,7 +1253,7 @@ public class EmpresaCEF {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern continuarBtn = new Pattern(getClass().getResource("/prints/cef/continuar.png")).similar(0.6);
+			Pattern continuarBtn = archiveAdm.getPatternFromJar("/prints/cef/continuar.png",0.6);
 			Match mContinuar = s.wait(continuarBtn, 10);
 			Location locContinuar = mContinuar.getTarget();
 			robot.mouseMove(locContinuar.getX(), locContinuar.getY());
@@ -1299,7 +1274,7 @@ public class EmpresaCEF {
 			Thread.sleep(3000);
 
 			s = new Screen();
-			Pattern imprimirBtn = new Pattern(getClass().getResource("/prints/cef/imprimir.png")).similar(0.6);
+			Pattern imprimirBtn = archiveAdm.getPatternFromJar("/prints/cef/imprimir.png",0.6);
 			Match mImprimir = s.wait(imprimirBtn, 10);
 			Location locImprimir = mImprimir.getTarget();
 			robot.mouseMove(locImprimir.getX(), locImprimir.getY());
@@ -1308,9 +1283,8 @@ public class EmpresaCEF {
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			Thread.sleep(3000);
 
-			ArchiveAdm arquivo = new ArchiveAdm();
 
-			arquivo.salvarArquivoCEF(nomeArquivo, caminhoPastaSalvar, data);
+			archiveAdm.salvarArquivoCEF(nomeArquivo, caminhoPastaSalvar, data);
 
 		} catch (Exception e) {
 			System.out.println(e);
