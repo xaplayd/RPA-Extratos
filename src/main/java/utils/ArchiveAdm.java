@@ -18,6 +18,8 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
 
+import main.java.utils.ChromeAdm;
+
 public class ArchiveAdm {
 
 	ChromeAdm chromeAdm = new ChromeAdm();

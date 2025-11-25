@@ -14,8 +14,7 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
 
-import main.java.utils.ArchiveAdm;
-import main.java.utils.ChromeAdm;
+import main.java.utils.*;
 
 public class EmpresaBB {
 	
@@ -244,7 +243,8 @@ public class EmpresaBB {
 
 			Thread.sleep(5000);
 
-			archiveAdm.salvarArquivoABC(nomeArquivo, caminhoPastaSalvar, data);
+			
+			archiveAdm.salvarArquivoBB(nomeArquivo, caminhoPastaSalvar, data);
 		
 			
 

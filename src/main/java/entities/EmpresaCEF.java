@@ -14,8 +14,7 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
 
-import main.java.utils.ArchiveAdm;
-import main.java.utils.ChromeAdm;
+import main.java.utils.*;
 
 public class EmpresaCEF {
 
@@ -320,7 +319,7 @@ public class EmpresaCEF {
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			Thread.sleep(3000);
 
-			archiveAdm.salvarArquivoABC(nomeArquivo, caminhoPastaSalvar, data);
+			archiveAdm.salvarArquivoCEF(nomeArquivo, caminhoPastaSalvar, data);
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -364,7 +363,7 @@ public class EmpresaCEF {
 			Thread.sleep(300);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-			Thread.sleep(3000);
+			Thread.sleep(7000);
 
 			s = new Screen();
 			Pattern saldoEExtratoBtn = archiveAdm.getPatternFromJar("/prints/cef/saldoseextrato.png",0.6);
@@ -561,7 +560,7 @@ public class EmpresaCEF {
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			Thread.sleep(3000);
 
-			archiveAdm.salvarArquivoABC(nomeArquivo, caminhoPastaSalvar, data);
+			archiveAdm.salvarArquivoCEF(nomeArquivo, caminhoPastaSalvar, data);
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -605,7 +604,7 @@ public class EmpresaCEF {
 			Thread.sleep(300);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-			Thread.sleep(3000);
+			Thread.sleep(7000);
 
 			s = new Screen();
 			Pattern saldoEExtratoBtn = archiveAdm.getPatternFromJar("/prints/cef/saldoseextrato.png",0.6);
@@ -801,7 +800,7 @@ public class EmpresaCEF {
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			Thread.sleep(3000);
 
-			archiveAdm.salvarArquivoABC(nomeArquivo, caminhoPastaSalvar, data);
+			archiveAdm.salvarArquivoCEF(nomeArquivo, caminhoPastaSalvar, data);
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -845,7 +844,7 @@ public class EmpresaCEF {
 			Thread.sleep(300);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-			Thread.sleep(3000);
+			Thread.sleep(7000);
 
 			s = new Screen();
 			Pattern saldoEExtratoBtn = archiveAdm.getPatternFromJar("/prints/cef/saldoseextrato.png",0.6);
@@ -1042,7 +1041,7 @@ public class EmpresaCEF {
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			Thread.sleep(3000);
 
-			archiveAdm.salvarArquivoABC(nomeArquivo, caminhoPastaSalvar, data);
+			archiveAdm.salvarArquivoCEF(nomeArquivo, caminhoPastaSalvar, data);
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -1086,7 +1085,7 @@ public class EmpresaCEF {
 			Thread.sleep(300);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-			Thread.sleep(3000);
+			Thread.sleep(7000);
 
 			s = new Screen();
 			Pattern saldoEExtratoBtn = archiveAdm.getPatternFromJar("/prints/cef/saldoseextrato.png",0.6);

@@ -9,13 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import main.java.entities.EmpresaABC;
-import main.java.entities.EmpresaBB;
-import main.java.entities.EmpresaCEF;
-import main.java.entities.EmpresaSANTANDER;
-import main.java.entities.EmpresaSICREDI;
-import main.java.utils.AppLogger;
-import main.java.utils.ChromeAdm;
+import main.java.entities.*;
+
+import main.java.utils.*;
 
 public class AppMain {
 
