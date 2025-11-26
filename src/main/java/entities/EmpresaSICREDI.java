@@ -147,6 +147,8 @@ public class EmpresaSICREDI {
 			DateTimeFormatter iniefimFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			String dataParaInieFim = dataExtrato.format(iniefimFormatter);
 
+			Thread.sleep(4000);
+			
 			s.keyDown(Key.CTRL);
 			s.type("f");
 			s.keyUp(Key.CTRL);

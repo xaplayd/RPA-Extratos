@@ -9,47 +9,65 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import main.java.entities.*;
-
-import main.java.utils.*;
+import main.java.entities.EmpresaABC;
+import main.java.entities.EmpresaBB;
+import main.java.entities.EmpresaCEF;
+import main.java.entities.EmpresaSANTANDER;
+import main.java.entities.EmpresaSICREDI;
+import main.java.utils.AppLogger;
+import main.java.utils.ChromeAdm;
+import main.java.utils.LoadingFrame;
 
 public class AppMain {
 
 	public static String salvaOnde = "Z:\\FINANCEIRO\\3.FINANCEIRO\\Extratos\\Extratos Bancários\\";
-	public static LocalDate data = null;
-
+	public static LocalDate data = LocalDate.of(2025, 11, 22);
 
 	public static void main(String[] args) {
-		
 
-		
-		for (String arg : args) {
-
-	         if (arg.startsWith("--data=")) {
-	             try {
-	                 String valor = arg.substring("--data=".length());
-	                 data = LocalDate.parse(valor); // atribui direto a variável data
-	             } catch (Exception e) {
-	                 System.out.println("Data inválida! Use o formato YYYY-MM-DD");
-	             }
-	         }
-		}
-		
-		
-		
-		System.out.println("Iniciando robo de geração de extratos.");
-		System.out.println();
-	
-		
-		ChromeAdm chromeAdm = new ChromeAdm();
-		
+		LoadingFrame loading = new LoadingFrame();
+		loading.mostrar();
+		loading.setStatus("Iniciando...");
+		loading.setProgress(0);
 
 		try {
 
+			loading.setStatus("Lendo argumentos...");
+			loading.setProgress(5);
+
+			for (String arg : args) {
+				if (arg.startsWith("--data=")) {
+					try {
+						String valor = arg.substring("--data=".length());
+						data = LocalDate.parse(valor);
+					} catch (Exception e) {
+						System.out.println("Data inválida! Use o formato YYYY-MM-DD");
+					}
+				}
+			}
+
+			loading.setStatus("Checando extratos pendentes...");
+			loading.setProgress(15);
+
 			List<String> pendentes = checaGerados();
+
+			loading.setStatus("Preparando automação...");
+			loading.setProgress(25);
+
+			ChromeAdm chromeAdm = new ChromeAdm();
 			AppLogger appLogger = new AppLogger();
 
+			int total = pendentes.size();
+			int contador = 0;
+
 			for (String extrato : pendentes) {
+
+				contador++;
+				int progresso = 30 + (int)((float)contador / total * 60);
+
+				loading.setProgress(progresso);
+				loading.setStatus("Gerando: " + extrato);
+
 				if (extrato.equals("SANTANDER ADM")) {
 					System.out.println();
 					System.out.println("Iniciando geração do extrato SANTANDER ADM");
@@ -314,17 +332,22 @@ public class AppMain {
 					empresa.geraExtratoCorrenteVIG();
 				}
 
+			
+
 			}
 
+			loading.setStatus("Finalizando...");
+			loading.setProgress(100);
+
 			chromeAdm.fechaChrome();
-		
-			System.out.println();
-			System.out.println("Execução concluída.");
+
+			loading.fechar();
+			System.out.println("\nExecução concluída.");
 
 		} catch (Exception e) {
+			loading.fechar();
 			e.printStackTrace();
 		}
-
 	}
 
 	public static String caminhoPastaData(LocalDate data) {
@@ -422,5 +445,6 @@ public class AppMain {
 
 		return extratosFaltando;
 	}
+
 
 }
