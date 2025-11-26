@@ -239,11 +239,9 @@ public class AppLogger {
 
 			s.type(Key.TAB);
 
-			Thread.sleep(3000);
+			Thread.sleep(7000);
 			
-			while (chromeAdm.confirmaChegadaNaTela("/prints/abc/carregandonumerosabc.png") == false) {
-				Thread.sleep(1000);
-			}
+		
 
 			s.keyDown(Key.CTRL);
 			s.type("f");
