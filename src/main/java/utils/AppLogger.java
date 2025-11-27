@@ -571,6 +571,21 @@ public class AppLogger {
 
 			System.out.println();
 			System.out.println("Aguardando tela inicial.");
+			
+			s = new Screen();
+			Pattern httpsTelaBtn = archiveAdm.getPatternFromJar("/prints/sicredi/httpsTela.png", 0.6);
+			Match mHttpsTela = s.exists(httpsTelaBtn, 10);
+			if (mHttpsTela != null) {
+				Pattern irParaSiteBtn = archiveAdm.getPatternFromJar("/prints/sicredi/irparaite.png", 0.6);
+				Match mIrParaSite = s.exists(irParaSiteBtn, 10);
+				Location locIrParaSite = mIrParaSite.getTarget();
+				robot.mouseMove(locIrParaSite.getX(), locIrParaSite.getY());
+				Thread.sleep(300);
+				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+				Thread.sleep(3000);
+			}
+
 
 			while (chromeAdm.confirmaChegadaNaTela("/prints/sicredi/confirmatelaacesso.png") == false) {
 				Thread.sleep(1000);
@@ -992,7 +1007,7 @@ public class AppLogger {
 		EmpresaCEF tempEmpresa = new EmpresaCEF();
 		List<EmpresaCEF> empresas = new ArrayList<>();
 
-		// Obtém o arquivo CSV do classpath (resources/data/acessCEF.csv)
+		
 		InputStream is = AppMain.class.getResourceAsStream("/data/acessCEF.csv");
 		if (is == null) {
 			System.out.println("Erro: arquivo '/data/acessCEF.csv' não encontrado no classpath!");
@@ -1074,15 +1089,20 @@ public class AppLogger {
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			Thread.sleep(3000);
+			
+			while (chromeAdm.confirmaChegadaNaTela("/prints/cef/telalogin.png") == false) {
+				Thread.sleep(5000);
+			}
 
-			App.setClipboard(tempEmpresa.getUser()); // copia para clipboard
+			App.setClipboard(tempEmpresa.getUser());
 
 			// Colar no campo desejado
 			s.type("v", KeyModifier.CTRL);
 
-			s.type(Key.TAB);
 
-			App.setClipboard(tempEmpresa.getPass()); // copia para clipboard
+			s.type(Key.TAB);
+			
+			App.setClipboard(tempEmpresa.getPass());
 
 			// Colar no campo desejado
 			s.type("v", KeyModifier.CTRL);

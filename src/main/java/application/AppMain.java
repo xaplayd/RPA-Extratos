@@ -21,7 +21,7 @@ import main.java.utils.LoadingFrame;
 public class AppMain {
 
 	public static String salvaOnde = "Z:\\FINANCEIRO\\3.FINANCEIRO\\Extratos\\Extratos Bancários\\";
-	public static LocalDate data = LocalDate.of(2025, 11, 22);
+	public static LocalDate data = null;
 
 	public static void main(String[] args) {
 
