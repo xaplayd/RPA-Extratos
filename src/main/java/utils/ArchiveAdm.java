@@ -18,7 +18,6 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
 
-import main.java.utils.ChromeAdm;
 
 public class ArchiveAdm {
 
@@ -104,6 +103,8 @@ public class ArchiveAdm {
 			Thread.sleep(300);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			
+			Thread.sleep(3000);
 
 			String pastaBase = caminhoSalvarPasta + ano + "\\" + mesNomeExtenso + "\\" + porDiaNome;
 
@@ -203,6 +204,8 @@ public class ArchiveAdm {
 			Thread.sleep(300);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			
+			Thread.sleep(3000);
 
 			String pastaBase = caminhoSalvarPasta + ano + "\\" + mesNomeExtenso + "\\" + porDiaNome;
 
@@ -306,6 +309,8 @@ public class ArchiveAdm {
 			Thread.sleep(300);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			
+			Thread.sleep(3000);
 
 			String pastaBase = caminhoSalvarPasta + ano + "\\" + mesNomeExtenso + "\\" + porDiaNome;
 
@@ -408,6 +413,8 @@ public class ArchiveAdm {
 			Thread.sleep(300);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			
+			Thread.sleep(3000);
 
 			String pastaBase = caminhoSalvarPasta + ano + "\\" + mesNomeExtenso + "\\" + porDiaNome;
 
@@ -568,6 +575,8 @@ public class ArchiveAdm {
 			Thread.sleep(300);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			
+			Thread.sleep(3000);
 
 			String pastaBase = caminhoSalvarPasta + ano + "\\" + mesNomeExtenso + "\\" + porDiaNome;
 

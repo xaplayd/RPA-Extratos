@@ -509,7 +509,6 @@ public class AppLogger {
 		EmpresaSICREDI tempEmpresa = new EmpresaSICREDI();
 		List<EmpresaSICREDI> empresas = new ArrayList<>();
 
-		// Obtém o arquivo CSV do classpath (resources/data/acessSICREDI.csv)
 		InputStream is = AppMain.class.getResourceAsStream("/data/acessSICREDI.csv");
 		if (is == null) {
 			System.out.println("Erro: arquivo '/data/acessSICREDI.csv' não encontrado no classpath!");
@@ -594,7 +593,7 @@ public class AppLogger {
 			System.out.println();
 			System.out.println("Tela de inicio carregada.");
 
-			App.setClipboard(tempEmpresa.getCnpj()); // copia para clipboard
+			App.setClipboard(tempEmpresa.getCnpj());
 
 			// Colar no campo desejado
 			s.type("v", KeyModifier.CTRL);
@@ -617,23 +616,29 @@ public class AppLogger {
 
 			System.out.println();
 			System.out.println("Tela de login carregada.");
+			robot.mouseMove(0, 0);
+
+			Thread.sleep(3000);			
 
 			s = new Screen();
-			Pattern usuarioAcessoBtn = archiveAdm.getPatternFromJar("/prints/sicredi/usuarioAcesso.png", 0.6);
+			Pattern usuarioAcessoBtn = archiveAdm.getPatternFromJar("/prints/sicredi/usuarioacesso2.png", 0.6);
 			Match mUsuarioAcesso = s.wait(usuarioAcessoBtn, 10);
-			Location locUsuarioAcesso = mUsuarioAcesso.getTarget();
-			robot.mouseMove(locUsuarioAcesso.getX(), locUsuarioAcesso.getY());
+			Location loc = mUsuarioAcesso.getTarget();
+			int x = loc.getX();
+			int y = mUsuarioAcesso.getY() + mUsuarioAcesso.getH() - 3; 
+			Location rodape = new Location(x, y);
+			robot.mouseMove(rodape.getX(), rodape.getY());
 			Thread.sleep(300);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			Thread.sleep(3000);
+			
+			App.setClipboard(tempEmpresa.getUser());
 
-			App.setClipboard(tempEmpresa.getUser()); // copia para clipboard
-
-			// Colar no campo desejado
 			s.type("v", KeyModifier.CTRL);
 			Thread.sleep(1000);
 
+			s = new Screen();
 			Pattern informaSenhaBtn = archiveAdm.getPatternFromJar("/prints/sicredi/informasenha.png", 0.6);
 			Match mInformaSenha = s.wait(informaSenhaBtn, 10);
 			Location locInformaSenha = mInformaSenha.getTarget();
@@ -1067,6 +1072,8 @@ public class AppLogger {
 				Thread.sleep(500); // espera estabilizar
 			}
 
+			Thread.sleep(5000);
+			
 			Pattern empresasBtn = archiveAdm.getPatternFromJar("/prints/cef/empresas.png", 0.6);
 			Match mEmpresas = s.wait(empresasBtn, 10);
 			Location locEmpresas = mEmpresas.getTarget();
