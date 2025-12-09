@@ -1128,11 +1128,9 @@ public class AppLogger {
 
 
 			s = new Screen();
-			Pattern fiqueAtentoBtn = archiveAdm.getPatternFromJar("/prints/cef/fiqueatento.png", 0.6);
-			Match mFiqueAtento = s.exists(fiqueAtentoBtn, 10);
-			if (mFiqueAtento != null) {
-				Pattern fecharFiqueAtentoBtn = archiveAdm.getPatternFromJar("/prints/cef/fecharfiqueatento.png", 0.6);
-				Match mFecharFiqueAtento = s.exists(fecharFiqueAtentoBtn, 10);
+			Pattern fecharFiqueAtentoBtn = archiveAdm.getPatternFromJar("/prints/cef/fecharfiqueatento.png", 0.6);
+			Match mFecharFiqueAtento = s.exists(fecharFiqueAtentoBtn, 10);
+			if (mFecharFiqueAtento != null) {
 				Location locFecharFiqueAtento = mFecharFiqueAtento.getTarget();
 				robot.mouseMove(locFecharFiqueAtento.getX(), locFecharFiqueAtento.getY());
 				Thread.sleep(300);

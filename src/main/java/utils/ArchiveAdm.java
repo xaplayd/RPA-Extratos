@@ -167,7 +167,7 @@ public class ArchiveAdm {
 			Thread.sleep(300);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-			Thread.sleep(5000);
+			Thread.sleep(15000);
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -272,7 +272,7 @@ public class ArchiveAdm {
 			Thread.sleep(300);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-			Thread.sleep(5000);
+			Thread.sleep(15000);
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -377,7 +377,7 @@ public class ArchiveAdm {
 			Thread.sleep(300);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-			Thread.sleep(5000);
+			Thread.sleep(15000);
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -481,7 +481,7 @@ public class ArchiveAdm {
 			Thread.sleep(300);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-			Thread.sleep(5000);
+			Thread.sleep(15000);
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -639,7 +639,7 @@ public class ArchiveAdm {
 			Thread.sleep(300);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-			Thread.sleep(5000);
+			Thread.sleep(15000);
 
 		} catch (Exception e) {
 			System.out.println(e);

@@ -21,7 +21,7 @@ import main.java.utils.LoadingFrame;
 public class AppMain {
 
 	public static String salvaOnde = "z:\\FINANCEIRO\\3.FINANCEIRO\\Extratos\\Extratos Bancários\\";
-	public static LocalDate data = LocalDate.of(2025, 11, 22);
+	public static LocalDate data = null;
 
 	public static void main(String[] args) {
 		
@@ -66,7 +66,7 @@ public class AppMain {
 				loading.setProgress(progresso);
 				loading.setStatus("Gerando: " + extrato);
 
-				/*if (extrato.equals("SANTANDER ADM")) {
+				if (extrato.equals("SANTANDER ADM")) {
 					System.out.println();
 					System.out.println("Iniciando geração do extrato SANTANDER ADM");
 
@@ -248,7 +248,7 @@ public class AppMain {
 					empresa.geraExtratoCorrenteSANTANDERvig();
 				}
 
-				else*/ if (extrato.equals("CAIXA VIG COBRANCA")) {
+				else if (extrato.equals("CAIXA VIG COBRANCA")) {
 					System.out.println();
 					System.out.println("Iniciando geração do extrato CAIXA VIG COBRANCA");
 
