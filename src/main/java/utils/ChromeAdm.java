@@ -74,6 +74,17 @@ public class ChromeAdm {
 
 		}
 	}
+	
+	public void abreChromeXP() {
+		try {
+			Runtime.getRuntime().exec(new String[] { chromePath, "--start-maximized", "--incognito",
+					"https://mfe.xpi.com.br/wl-login/index.html#/login" });
+
+		} catch (Exception e) {
+			System.out.println(e);
+
+		}
+	}
 
 	public boolean confirmaChegadaNaTela(String caminhoTela) {
 		try {

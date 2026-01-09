@@ -14,6 +14,7 @@ import main.java.entities.EmpresaBB;
 import main.java.entities.EmpresaCEF;
 import main.java.entities.EmpresaSANTANDER;
 import main.java.entities.EmpresaSICREDI;
+import main.java.entities.EmpresaXP;
 import main.java.utils.AppLogger;
 import main.java.utils.ChromeAdm;
 import main.java.utils.LoadingFrame;
@@ -66,7 +67,67 @@ public class AppMain {
 				loading.setProgress(progresso);
 				loading.setStatus("Gerando: " + extrato);
 
-				if (extrato.equals("SANTANDER ADM")) {
+				if (extrato.equals("XP CONTINGENCIA")) {
+					System.out.println();
+					System.out.println("Iniciando geração do extrato XP CONTINGENCIA");
+
+					EmpresaXP empresa = appLogger.logarXP(10, 2);
+					empresa.setCaminhoPastaSalvar(salvaOnde);
+					if (data == null) {
+						data = LocalDate.now().minusDays(1);
+
+					}
+					empresa.setData(data);
+					empresa.setNomeArquivo("XP CONTINGENCIA");
+					empresa.geraExtratoCorrenteXP();
+
+					
+				} else if (extrato.equals("XP QUALITY")) {
+					System.out.println();
+					System.out.println("Iniciando geração do extrato XP QUALITY");
+
+					EmpresaXP empresa = appLogger.logarXP(100, 1);
+					empresa.setCaminhoPastaSalvar(salvaOnde);
+					if (data == null) {
+						data = LocalDate.now().minusDays(1);
+
+					}
+					empresa.setData(data);
+					empresa.setNomeArquivo("XP QUALITY");
+					empresa.geraExtratoCorrenteXP();
+
+					
+				} else if (extrato.equals("XP VIG")) {
+					System.out.println();
+					System.out.println("Iniciando geração do extrato XP VIG");
+
+					EmpresaXP empresa = appLogger.logarXP(30, 1);
+					empresa.setCaminhoPastaSalvar(salvaOnde);
+					if (data == null) {
+						data = LocalDate.now().minusDays(1);
+
+					}
+					empresa.setData(data);
+					empresa.setNomeArquivo("XP VIG");
+					empresa.geraExtratoCorrenteXP();
+
+					
+				} else if (extrato.equals("XP ADM")) {
+					System.out.println();
+					System.out.println("Iniciando geração do extrato XP ADM");
+
+					EmpresaXP empresa = appLogger.logarXP(10, 1);
+					empresa.setCaminhoPastaSalvar(salvaOnde);
+					if (data == null) {
+						data = LocalDate.now().minusDays(1);
+
+					}
+					empresa.setData(data);
+					empresa.setNomeArquivo("XP ADM");
+					empresa.geraExtratoCorrenteXP();
+
+					
+				} else if (extrato.equals("SANTANDER ADM")) {
 					System.out.println();
 					System.out.println("Iniciando geração do extrato SANTANDER ADM");
 
@@ -376,11 +437,11 @@ public class AppMain {
 	public static List<String> checaGerados() {
 		String caminhoSalva = salvaOnde + caminhoPastaData(data);
 
-		List<String> listaExtratos = Arrays.asList("ABC", "BB ADM COBRANCA", "SANTANDER ADM", "BB ADM", "BB ESPECIAIS",
+		List<String> listaExtratos = Arrays.asList("SICREDI VIG", "ABC", "BB ADM COBRANCA", "SANTANDER ADM", "BB ADM", "BB ESPECIAIS",
 				"BB QUALITY", "BB SERVIÇOS", "BB VIG FILIAL", "BB VIG", "CAIXA ADM COBRANCA", "SANTANDER VIG",
 				"CAIXA ADM", "CAIXA ADM GARANTIDA", "CAIXA VIG COBRANCA", "CAIXA VIG", "CAIXA VIG GARANTIDA",
-				"SANTANDER QUALITY", "SICREDI ADM", "SICREDI VIG", "XP ADM 1", "XP ADM", "XP CONTINGENCIA",
-				"XP QUALITY", "XP VIG 1", "XP VIG");
+				"SANTANDER QUALITY", "SICREDI ADM", "XP ADM", "XP CONTINGENCIA",
+				"XP QUALITY", "XP VIG");
 
 		File pasta = new File(caminhoSalva);
 

@@ -1116,7 +1116,7 @@ public class AppLogger {
 
 			s.type(Key.ENTER);
 
-			s = new Screen();
+			/*s = new Screen();
 			Pattern permitirDessaVezBtn = archiveAdm.getPatternFromJar("/prints/cef/permitirdessavez.png", 0.6);
 			Match mPermitirDessaVez = s.wait(permitirDessaVezBtn, 10);
 			Location locPermitirDessaVez = mPermitirDessaVez.getTarget();
@@ -1124,7 +1124,7 @@ public class AppLogger {
 			Thread.sleep(300);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-			Thread.sleep(8000);
+			Thread.sleep(8000);*/
 
 
 			s = new Screen();
@@ -1155,4 +1155,165 @@ public class AppLogger {
 
 		return tempEmpresa;
 	}
+	
+	public EmpresaXP logarXP(Integer empresa, Integer tipo) {
+
+		System.out.println();
+		System.out.println("Logando no XP - Empresa: " + empresa);
+
+		chromeAdm.fechaChrome();
+
+		chromeAdm.abreChromeXP();
+
+		EmpresaXP tempEmpresa = new EmpresaXP();
+		List<EmpresaXP> empresas = new ArrayList<>();
+
+		// Obtém o arquivo CSV do classpath (resources/data/acessBB.csv)
+		InputStream is = AppMain.class.getResourceAsStream("/data/acessXP.csv");
+		if (is == null) {
+			System.out.println("Erro: arquivo '/data/acessXP.csv' não encontrado no classpath!");
+		} else {
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+
+				String linha;
+
+				// Pula o cabeçalho
+				br.readLine();
+
+				while ((linha = br.readLine()) != null) {
+					String[] campos = linha.split(";");
+
+					if (campos.length < 4)
+						continue;
+
+					try {
+						Integer codEmp = Integer.parseInt(campos[0].trim());
+						Integer codTip = Integer.parseInt(campos[1].trim());
+						String cpf = campos[2].trim();
+						String senha = campos[3].trim();
+
+						EmpresaXP e = new EmpresaXP(codEmp, codTip, cpf, senha);
+						empresas.add(e);
+					} catch (NumberFormatException ex) {
+						System.out.println("Linha ignorada por formato inválido: " + linha);
+					}
+				}
+
+			} catch (IOException e) {
+				System.out.println("Erro ao ler arquivo: " + e.getMessage());
+			}
+		}
+
+		// Procura a empresa e tipo desejada
+		for (EmpresaXP emp : empresas) {
+			if (emp.getCodEmp().equals(empresa) && emp.getCodTip().equals(tipo)) {
+				tempEmpresa = emp;
+			}
+		}
+
+		try {
+			Robot robot;
+			robot = new Robot();
+
+			System.out.println();
+			System.out.println("Aguardando tela de login.");
+
+			while (chromeAdm.confirmaChegadaNaTela("/prints/xp/telalogin.png") == false) {
+				Thread.sleep(1000);
+			}
+
+			System.out.println();
+			System.out.println("Tela de login carregada.");
+
+			boolean capsOn = Toolkit.getDefaultToolkit().getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
+			if (capsOn) {
+				robot.keyPress(KeyEvent.VK_CAPS_LOCK);
+				robot.keyRelease(KeyEvent.VK_CAPS_LOCK);
+				Thread.sleep(500); // espera estabilizar
+			}
+			
+			
+			Screen s = new Screen();
+			Pattern pjField = archiveAdm.getPatternFromJar("/prints/xp/pessoajuridiclg.png", 0.6);
+			Match mPjField = s.wait(pjField, 10);
+			Location locPjField = mPjField.getTarget();
+			robot.mouseMove(locPjField.getX(), locPjField.getY());
+			Thread.sleep(300);
+			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			Thread.sleep(3000);
+			
+			
+			s = new Screen();
+			Pattern cpfField = archiveAdm.getPatternFromJar("/prints/xp/cpflg.png", 0.6);
+			Match mCpfField = s.wait(cpfField, 10);
+			Location locCpfField = mCpfField.getTarget();
+			robot.mouseMove(locCpfField.getX(), locCpfField.getY());
+			Thread.sleep(300);
+			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			Thread.sleep(3000);
+			
+			App.setClipboard(tempEmpresa.getCpf()); // copia para clipboard
+
+			// Colar no campo desejado
+			s.type("v", KeyModifier.CTRL);
+
+			s = new Screen();
+			Pattern contLogBtn = archiveAdm.getPatternFromJar("/prints/xp/contsenhalg.png", 0.6);
+			Match mContLogBtn = s.wait(contLogBtn, 10);
+			Location locContLogBtn = mContLogBtn.getTarget();
+			robot.mouseMove(locContLogBtn.getX(), locContLogBtn.getY());
+			Thread.sleep(300);
+			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			Thread.sleep(7000);
+			
+			s = new Screen();
+			Pattern passField = archiveAdm.getPatternFromJar("/prints/xp/senhalg.png", 0.6);
+			Match mPassField = s.wait(passField, 10);
+			Location locPassField = mPassField.getTarget();
+			robot.mouseMove(locPassField.getX(), locPassField.getY());
+			Thread.sleep(300);
+			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			Thread.sleep(3000);
+			
+			App.setClipboard(tempEmpresa.getPass()); 
+			s.type("v", KeyModifier.CTRL);
+			
+			s = new Screen();
+			Pattern contBtn = archiveAdm.getPatternFromJar("/prints/xp/contlg.png", 0.6);
+			Match mContBtn = s.wait(contBtn, 10);
+			Location locContBtn = mContBtn.getTarget();
+			robot.mouseMove(locContBtn.getX(), locContBtn.getY());
+			Thread.sleep(300);
+			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			Thread.sleep(3000);
+
+			System.out.println();
+			System.out.println("Aguardando entrada no portal.");
+
+			while (chromeAdm.confirmaChegadaNaTela("/prints/xp/confabrport.png") == false) {
+				Thread.sleep(5000);
+			}
+
+			System.out.println();
+			System.out.println("Tela de portal carregada.");
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println();
+		System.out.println("Logado com sucesso - Empresa: " + empresa);
+
+		return tempEmpresa;
+
+	}
+	
+	
+	
 }

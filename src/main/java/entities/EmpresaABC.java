@@ -152,11 +152,22 @@ public class EmpresaABC {
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			Thread.sleep(3000);
 			
-			s.type(Key.TAB);
+            s = new Screen();
+			
+			Pattern ultimoMesBtn = archiveAdm.getPatternFromJar("/prints/abc/ultimomes.png",0.6);
+			Match mUltimoMes = s.wait(ultimoMesBtn, 10);
+			Location locUltimoMes = mUltimoMes.getTarget();
+			robot.mouseMove(locUltimoMes.getX(), locUltimoMes.getY());
+			Thread.sleep(300);
+			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			Thread.sleep(3000);
+			
+			/*s.type(Key.TAB);
 			s.type(Key.TAB);
 			s.type(dataParaInieFim);
 			s.type(Key.TAB);
-			s.type(dataParaInieFim);
+			s.type(dataParaInieFim);*/
 			
 			
 			s = new Screen();
