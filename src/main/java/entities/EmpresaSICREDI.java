@@ -145,7 +145,9 @@ public class EmpresaSICREDI {
 			LocalDate dataExtrato = data;
 
 			DateTimeFormatter iniefimFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-			String dataParaInieFim = dataExtrato.format(iniefimFormatter);
+			String dataFim = dataExtrato.format(iniefimFormatter);
+
+		    String dataInicio = dataExtrato.minusDays(1).format(iniefimFormatter);
 
 			Thread.sleep(4000);
 			
@@ -197,13 +199,13 @@ public class EmpresaSICREDI {
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			Thread.sleep(3000);
 			
-			s.type(dataParaInieFim);
+			s.type(dataFim);
 			
 			s.keyDown(Key.SHIFT);
 			s.type(Key.TAB);
 			s.keyUp(Key.SHIFT);
 			
-			s.type(dataParaInieFim);
+			s.type(dataInicio);
 			
 			Pattern pesquisarBtn = archiveAdm.getPatternFromJar("/prints/sicredi/pesquisar.png",0.6);
 			Match mPesquisar = s.wait(pesquisarBtn, 10);

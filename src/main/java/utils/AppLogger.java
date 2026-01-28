@@ -112,13 +112,14 @@ public class AppLogger {
 			// Colar no campo desejado
 			s.type("v", KeyModifier.CTRL);
 			s.type(Key.TAB);
+			Thread.sleep(2000);
+			
 			App.setClipboard(tempEmpresa.getPass()); // copia para clipboard
 
 			// Colar no campo desejado
 			s.type("v", KeyModifier.CTRL);
-			s.type(Key.TAB);
-			s.type(Key.TAB);
-			s.type(Key.TAB);
+
+			
 			s.type(Key.ENTER);
 
 			System.out.println();
@@ -571,7 +572,7 @@ public class AppLogger {
 			System.out.println();
 			System.out.println("Aguardando tela inicial.");
 			
-			s = new Screen();
+			/*s = new Screen();
 			Pattern httpsTelaBtn = archiveAdm.getPatternFromJar("/prints/sicredi/httpsTela.png", 0.6);
 			Match mHttpsTela = s.exists(httpsTelaBtn, 10);
 			if (mHttpsTela != null) {
@@ -583,8 +584,46 @@ public class AppLogger {
 				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 				Thread.sleep(3000);
-			}
+			}*/
+			
+			s = new Screen();
+			Pattern permitirTodosPtn = archiveAdm.getPatternFromJar("/prints/sicredi/permitirtodos.png", 0.6);
+			Match mPermitirTodosPtn = s.exists(permitirTodosPtn, 10);
+			Location locPermitirTodosPtn = mPermitirTodosPtn.getTarget();
+			robot.mouseMove(locPermitirTodosPtn.getX(), locPermitirTodosPtn.getY());
+			Thread.sleep(300);
+			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			Thread.sleep(3000);
+			
+			
 
+			s = new Screen();
+			Pattern portalSicrediPtn = archiveAdm.getPatternFromJar("/prints/sicredi/portalsicrediptn.png", 0.6);
+			Match mPortalSicrediPtn = s.exists(portalSicrediPtn, 10);
+			if (mPortalSicrediPtn != null) {
+				Pattern acessarMinhaContaBtn = archiveAdm.getPatternFromJar("/prints/sicredi/acesarminhaconta.png", 0.6);
+				Match mAcessarMinhaContaBtn = s.exists(acessarMinhaContaBtn, 10);
+				Location locAcessarMinhaContaBtn = mAcessarMinhaContaBtn.getTarget();
+				robot.mouseMove(locAcessarMinhaContaBtn.getX(), locAcessarMinhaContaBtn.getY());
+				Thread.sleep(300);
+				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+				Thread.sleep(3000);
+				
+				Pattern pessoaJuridicaBtn = archiveAdm.getPatternFromJar("/prints/sicredi/pessoajuridica.png", 0.6);
+				Match mPessoaJuridicaBtn = s.exists(pessoaJuridicaBtn, 10);
+				Location locPessoaJuridicaBtn = mPessoaJuridicaBtn.getTarget();
+				robot.mouseMove(locPessoaJuridicaBtn.getX(), locPessoaJuridicaBtn.getY());
+				Thread.sleep(300);
+				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+				Thread.sleep(3000);
+			
+			}
+			
+			
+			
 
 			while (chromeAdm.confirmaChegadaNaTela("/prints/sicredi/confirmatelaacesso.png") == false) {
 				Thread.sleep(1000);

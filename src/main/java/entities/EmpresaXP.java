@@ -131,6 +131,12 @@ public class EmpresaXP {
 				Thread.sleep(5000);
 			}
 			
+			s.keyDown(Key.CTRL);
+			s.type("p");
+			s.keyUp(Key.CTRL);			
+			
+			archiveAdm.salvarArquivoXPCapa(nomeArquivo + " 1", caminhoPastaSalvar, data);
+			
 
 			s.keyDown(Key.CTRL);
 			s.type("f");

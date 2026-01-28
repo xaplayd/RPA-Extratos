@@ -45,7 +45,7 @@ public class ChromeAdm {
 	public void abreChromeSICREDI() {
 		try {
 			Runtime.getRuntime()
-					.exec(new String[] { chromePath, "--start-maximized", "--incognito", "IBPJ.SICREDI.COM.BR" });
+					.exec(new String[] { chromePath, "--start-maximized", "--incognito", "https://www.sicredi.com.br/home/" });
 
 		} catch (Exception e) {
 			System.out.println(e);
